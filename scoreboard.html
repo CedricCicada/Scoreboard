@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="scoreboard.css">
+</head>
+
+<body>
+  <h1>Crokinole Match Scoreboard</h1>
+  <h3>Keyboard shortcuts in parentheses</h3>
+
+  <p>
+  <button class="button" onclick="setup()">Match Setup</button>
+  <button class="button" onclick="setSinglesAlignment()">Singles</button>
+  <button class="button" onclick="setDoublesAlignment()">Doubles</button>
+  <button class="button" onclick="disccolor()">Set colours</button>
+  <button class="button" onclick="fontsize()">Set font size</button>
+  <!--Should be automatic based on numberf of games -- one is left, >1 is right -->
+  <button class="button" onclick="changecolspan()">Change Centering of bottom row</button>
+  </p>
+
+  <table>
+    <tr>
+      <td width="40%">
+        <br/>
+        <button class="button" onclick="shotupdate(1)">No 20 (1)</button>
+        <button class="button" onclick="shotupdate(2)">20 (2)</button>
+        <button class="button" onclick="shotupdate(9)">Oppo 20 (9)</button>
+        <button class="button yellow_bg" onclick="undoShot()">Undo Shot</button>        
+        <br/>
+        <button class="button" onclick="ptsupdate(4)">Player 1 wins (4)</button>
+        <button class="button" onclick="ptsupdate(5)">Tie (5)</button>
+        <button class="button" onclick="ptsupdate(6)">Player 2 wins (6)</button>
+        <button class="button yellow_bg" onclick="undoScore()">Undo Score</button>
+        <br/>
+        <button class="button" onclick="swaphammer()">Swap Hammer (0)</button>
+      </td>
+      <td width="60%">
+        </br>Match winning criteria: <a id="bestofXgames">Best of 3 Games</a> <a id="Xptstowin">(First to 5 Points)</a>
+        </br>Enter shot attempt and shot grade before hitting 20 or non-20 event.<br/>
+        <h2>Next Shot: <a id="curshooter_disp"></a></h2>
+          
+        <table class="scoreboard">
+          <colgroup><col id="col1">
+                    <col id="col2">
+                    <col id="col3">
+                    <col id="col4">
+                    <col id="col5"></colgroup>
+          <tr id="row1"><th colspan="2"><a id="displaydetail">semi?</a></th>
+              <th>20s</th><th>Points</th><th>Games</th></tr>
+
+          <tr id="row2">
+            <td id="player1">Beierling</td>
+              <td style="border-style: solid solid solid hidden!important;"><div class="discrow"><div id="p1disc13"></div></div>
+                <div class="discrow"><div id="p1disc12"></div><div id="p1disc11"></div></div>
+                <div class="discrow"><div id="p1disc10"></div><div id="p1disc9"></div></div>
+                <div class="discrow"><div id="p1disc8"></div><div id="p1disc7"></div></div>
+                <div class="discrow"><div id="p1disc6"></div><div id="p1disc5"></div></div>
+                <div class="discrow"><div id="p1disc4"></div><div id="p1disc3"></div></div>
+                <div class="discrow"><div id="p1disc2"></div><div id="p1disc1"></div></div></td>
+              <td id="redcell"><a id="p1_20s_disp">0</a></td>
+              <td id="redcell"><a id="p1_pts_disp">0</a></td>
+              <td id="redcell"><a id="p1_gms_disp">0</a></td>
+          </tr>
+
+          <tr id="row3">
+            <td id="player2">Slater</td>
+            <td style="border-style: solid solid solid hidden!important;"><div class="discrow"><div id="p2disc13"></div></div>
+                <div class="discrow"><div id="p2disc12"></div><div id="p2disc11"></div></div>
+                <div class="discrow"><div id="p2disc10"></div><div id="p2disc9"></div></div>
+                <div class="discrow"><div id="p2disc8"></div><div id="p2disc7"></div></div>
+                <div class="discrow"><div id="p2disc6"></div><div id="p2disc5"></div></div>
+                <div class="discrow"><div id="p2disc4"></div><div id="p2disc3"></div></div>
+                <div class="discrow"><div id="p2disc2"></div><div id="p2disc1"></div></div></td>
+              <td id="redcell"><a id="p2_20s_disp">0</a></td>
+              <td id="redcell"><a id="p2_pts_disp">0</a></td>
+              <td id="redcell"><a id="p2_gms_disp">0</a></td>
+          </tr>
+
+          <tr id="row4"><th colspan="5" id="matchid">Tournament</th><th></th></tr>
+        </table>
+        <br/>
+        <br/>
+
+      </td>
+    </tr>
+    <tr>
+      <td width="40%">
+        <button class="button" onclick="shotattempt(1)">Open 20 (t)</button>
+        <button class="button" onclick="shotattempt(2)">Open Defense (d)</button>
+        <button class="button" onclick="shotattempt(3)">Tap/Raise (a)</button><br/>
+        <button class="button" onclick="shotattempt(4)">Hit and stick (h)</button>
+        <button class="button" onclick="shotattempt(5)">Hit and roll (r)</button><br/>
+        <button class="button" onclick="shotattempt(6)">Follow through (f)</button>
+        <button class="button" onclick="shotattempt(7)">Peel (p)</button>
+        <button class="button" onclick="shotattempt(8)">Unknown (u)</button>
+      </br></br>
+        <button class="button" onclick="shotgrade(0)">Grade 0 (c)</button>
+        <button class="button" onclick="shotgrade(1)">Grade 1 (v)</button>
+        <button class="button" onclick="shotgrade(2)">Grade 2 (b)</button>
+        <button class="button" onclick="shotgrade(3)">Grade 3 (n)</button>
+        <button class="button" onclick="shotgrade(4)">Grade 4 (m)</button>
+
+      </td>
+      <td width="60%">
+        <table class="scoreboard">
+          <tr><th>Statistics</th>
+              <th>Match Time</th><th>Open 20%</th><th>Shooting %</th><th>Major Errors</th><th>Hammer</th></tr>
+
+          <tr><td>P1</td>
+              <td><label id="minutes1">00</label>:<label id="seconds1">00</label>.<label id="tenths1">0</label></td>
+              <td><a id="p1Open20Ratio">0</a>% (<a id="p1Open20Makes">0</a>/<a id="p1Open20Attempts">0</a>)</td>
+              <td><a id="p1ShootingRatio">0</a>% (<a id="p1Shots">0</a>)</td>
+              <td id="p1Errors">0</td>
+              <td><a id="p1hammerind">1st Shot</a></td></tr>
+
+          <tr><td>P2</td>
+              <td><label id="minutes2">00</label>:<label id="seconds2">00</label>.<label id="tenths2">0</label></td>
+              <td><a id="p2Open20Ratio">0</a>% (<a id="p2Open20Makes">0</a>/<a id="p2Open20Attempts">0</a>)</td>
+              <td><a id="p2ShootingRatio">0</a>% (<a id="p2Shots">0</a>)</td>
+              <td id="p2Errors">0</td>
+              <td><a id="p2hammerind">Hammer</a></td></tr>
+
+          <tr><th>Total</th>
+              <th><label id="minutes">00</label>:<label id="seconds">00</label>.<label id="tenths">0</label></th>
+              <th><a id="totalOpen20Ratio">0</a>%</th>
+              <th><a id="totalShootingRatio">0</a>%</th>
+              <th id="totalErrors">0</th>
+              <th></th></tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+  <table id="shotlog">
+  <tr> <!-- these are all the key variables to track and base logic off of-->
+    <td id="slide_number">1</td>
+    <td id="curshooter" hidden>1</td>
+    <td id="player1DisksShot" hidden>0</td>
+    <td id="player2DisksShot" hidden>0</td>
+    <td id="p1_20s" hidden>0</td>
+    <td id="p2_20s" hidden>0</td>
+    <td id="p1_pts" hidden>0</td>
+    <td id="p2_pts" hidden>0</td>
+    <td id="p1_gms" hidden>0</td>
+    <td id="p2_gms" hidden>0</td>
+    <td id="timelength" hidden>0</td>
+    <td id="shotattempt" hidden>x</td>
+    <td id="shotgrade" hidden>x</td>
+  </tr></table>
+
+  <p><button class="button" onclick="exporttable()">Download match log table</button></p>
+  <table id="Match Log">
+  <tr><th>Slide #</th><th>Shooter</th><th>P1 Shot#</th><th>P2 Shot#</th><th>P1 20s</th><th>P2 20s</th><th>P1 Pts</th><th>P2 Pts</th><th>P1 Gms</th><th>P2 Gms</th><th>Time Length</th><th>Shot Attempt</th><th>Shot Grade</th></tr>
+  </table>
+
+  </body>
+
+ <script src="scoreboard.js">
+
+</script>
+
+
+</html>
