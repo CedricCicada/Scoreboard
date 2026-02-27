@@ -609,35 +609,6 @@ function shotgrade (x) {
 }
 
 
-//function changes the singles v doubles alignment differences of the scoreboard:
-  ///// 1) column widths (doubles has more room for names) (344/145, 294/195)
-  ///// 2) disc stacking (singles allows 8 discs in a single row, doubles splits after 6)
-  ///// 3) statistics table expands to allow 4 player entries
-//NOTE - AFTER THIS IS DONE SHOULD MAKE FILE DEFAULT TO SINGLES ON LOAD
-function change_singles_doubles_alignment() {
-  var k = document.getElementById("alignment_id").innerHTML;
-  if (k == "Change to Doubles Alignment") {
-    //this is the doubles alignment
-    document.getElementById("alignment_id").innerHTML = "Change to Singles Alignment";
-    document.getElementById("col1").style.width = "344px";
-    document.getElementById("col2").style.width = "145px";
-    document.className("disc1shot").style.float = "none";
-    document.className("disc1remain").style.float = "none";
-    document.className("disc2shot").style.float = "none";
-    document.className("disc2remain").style.float = "none";
-  } else {
-    //this is the singles alignment
-    document.getElementById("alignment_id").innerHTML = "Change to Doubles Alignment";
-    document.getElementById("col1").style.width = "294px";
-    document.getElementById("col2").style.width = "195px";
-    document.className("disc1shot").style.float = "right";
-    document.className("disc1remain").style.float = "right";
-    document.className("disc2shot").style.float = "right";
-    document.className("disc2remain").style.float = "right";
-  }
-
-}
-
 //exports match log table as csv
 function exporttable(){
     /* Get the HTML data using Element by Id */
@@ -700,23 +671,18 @@ function exporttable(){
         link.click();
 }
 
+// These adjust the widths of the table columns that hold the disk images.  For singles,
+// the columns are wide enough to show eight disks.  For doubles, they are only wide 
+// enough for six, sp twelve disks are shown in two rows.
 function setSinglesAlignment()
 {
   document.getElementById("col1").style.width = "294px";
   document.getElementById("col2").style.width = "195px";
-  document.className("disc1shot").style.float = "right";
-  document.className("disc1remain").style.float = "right";
-  document.className("disc2shot").style.float = "right";
-  document.className("disc2remain").style.float = "right";
 }
 
 function setDoublesAlignment()
 {
   document.getElementById("col1").style.width = "344px";
   document.getElementById("col2").style.width = "145px";
-  document.className("disc1shot").style.float = "none";
-  document.className("disc1remain").style.float = "none";
-  document.className("disc2shot").style.float = "none";
-  document.className("disc2remain").style.float = "none";
 }
 
