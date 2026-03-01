@@ -103,20 +103,43 @@ var Xgmstowin = 0;  //internal
 
 function setup() 
 {
-	player1 = prompt("Enter player/team name #1", "Player 1");
-	player1 = player1.toUpperCase();
-	player2 = prompt("Enter player/team name #2", "Player 2");
-	player2 = player2.toUpperCase();
-	eventID = prompt("Enter Event ID", eventID);
-	eventID = eventID.toUpperCase();
-	matchDetail = prompt("Enter match detail to show at top of scoreboard, ie Semifinal - First to 11", matchDetail);
-	bestofXgames = prompt("Match is best of X Games (ex. If in Tavistock, X=3 as the match is a best of 3 games. Whereas a race to 11 points is best of 1 game)",
-							bestofXgames);	
-	Xgmstowin = Math.ceil(bestofXgames/2)
-	Xptstowin = prompt("Each game requires X points to win (ex. If in Tavistock, X=5, whereas a race to 9 points has X=9)", Xptstowin);
-	numdiscs = parseInt(prompt("Each round consists of X discs each. (max 13 for disc visuals)", numdiscs));
+    player1 = prompt("Enter player/team name #1", "Player 1");
+    player1 = player1.toUpperCase();
+    player2 = prompt("Enter player/team name #2", "Player 2");
+    player2 = player2.toUpperCase();
+    eventID = prompt("Enter Event ID", eventID);
+    eventID = eventID.toUpperCase();
+    matchDetail = prompt("Enter match detail to show at top of scoreboard, ie Semifinal - First to 11", 
+                          matchDetail);
+    bestofXgames = prompt("Match is best of X Games (ex. If in Tavistock, X=3 as the match is a best of 3 games. Whereas a race to 11 points is best of 1 game)",
+                          bestofXgames);	
+    Xgmstowin = Math.ceil(bestofXgames/2)
+    Xptstowin = prompt("Each game requires X points to win (ex. If in Tavistock, X=5, whereas a race to 9 points has X=9)", 
+                        Xptstowin);
+    numdiscs = parseInt(prompt("Each round consists of X discs each. (max 13 for disc visuals)", numdiscs));
 
-	//initial time variables
+    slidenumber = 1; //slide_number
+    curshooter = 1;  //curshooter & curshooter_disp
+    player1DisksShot = 0; //player1DisksShot
+    player2DisksShot = 0; //player2DisksShot
+    player1Twenties = 0; //p1_20s & p1_20s_disp
+    player2Twenties = 0; //p2_20s & p2_20s_disp
+    player1Points = 0; //p1_pts & p1_pts_disp
+    player2Points = 0; //p2_pts & p2_pts_disp
+    player1Games = 0; //p1_gms & p1_gms_disp
+    player2Games = 0; //p2_gms & p2_gms_disp
+    document.getElementById("p1_20s").innerHTML = player1Twenties;
+    document.getElementById("p1_20s_disp").innerHTML = player1Twenties;
+    document.getElementById("p2_20s").innerHTML = player2Twenties;
+    document.getElementById("p2_20s_disp").innerHTML = player2Twenties;
+    document.getElementById("slide_number").innerHTML = slidenumber;
+    document.getElementById("curshooter").innerHTML = curshooter;
+    document.getElementById("p1_gms_disp").innerHTML = player1Games;
+    document.getElementById("p2_gms_disp").innerHTML = player2Games;
+    document.getElementById("player1DisksShot").innerHTML = player1DisksShot ; 
+    document.getElementById("player2DisksShot").innerHTML = player2DisksShot;
+
+    //initial time variables
 	d1 = new Date();
 	n1 = d1.getTime()/1000;
 
@@ -157,41 +180,17 @@ function setup()
 
 }
 
-function resetMatch()
-{
-	slidenumber = 1; //slide_number
-	curshooter = 1;  //curshooter & curshooter_disp
-	player1DisksShot = 0; //player1DisksShot
-	player2DisksShot = 0; //player2DisksShot
-	player1Twenties = 0; //p1_20s & p1_20s_disp
-	player2Twenties = 0; //p2_20s & p2_20s_disp
-	player1Points = 0; //p1_pts & p1_pts_disp
-	player2Points = 0; //p2_pts & p2_pts_disp
-	player1Games = 0; //p1_gms & p1_gms_disp
-	player2Games = 0; //p2_gms & p2_gms_disp
-    document.getElementById("p1_20s").innerHTML = player1Twenties;
-    document.getElementById("p1_20s_disp").innerHTML = player1Twenties;
-    document.getElementById("p2_20s").innerHTML = player2Twenties;
-    document.getElementById("p2_20s_disp").innerHTML = player2Twenties;
-    document.getElementById("slide_number").innerHTML = slidenumber;
-    document.getElementById("curshooter").innerHTML = curshooter;
-    document.getElementById("p1_gms_disp").innerHTML = player1Games;
-    document.getElementById("p2_gms_disp").innerHTML = player2Games;
-    document.getElementById("player1DisksShot").innerHTML = player1DisksShot ; 
-    document.getElementById("player2DisksShot").innerHTML = player2DisksShot;
-}
-
 //updates html for latest javascript values
   //x is used as indicator for type of update so not all elements are called on to update if unnecessary
   //working as intended (Apr 7, 2020)
 function page_update(x) {
   if (x==0){ //setup call
-    document.getElementById("player1").innerHTML = player1
-    document.getElementById("player2").innerHTML = player2
-    document.getElementById("eventID").innerHTML = eventID
-    document.getElementById("matchDetail").innerHTML = matchDetail
-    document.getElementById("bestofXgames").innerHTML = "Best of " + bestofXgames + " Games"
-    document.getElementById("Xptstowin").innerHTML = "(First to " + Xptstowin + " Points)" }
+    document.getElementById("player1").innerHTML = player1;
+    document.getElementById("player2").innerHTML = player2;
+    document.getElementById("eventid").innerHTML = eventID;
+    document.getElementById("matchDetail").innerHTML = matchDetail;
+    document.getElementById("bestofXgames").innerHTML = "Best of " + bestofXgames + " Games";
+    document.getElementById("Xptstowin").innerHTML = "(First to " + Xptstowin + " Points)" };
 
   if (x==1){ //swaphammer call
     document.getElementById("curshooter").innerHTML = curshooter
