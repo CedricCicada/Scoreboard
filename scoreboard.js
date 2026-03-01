@@ -89,8 +89,8 @@ var bestofXgames = 1; //bestofXgames
 var Xptstowin = 5; //Xptstowin
 var player1 = "P1"; //player1
 var player2 = "P2"; //player2
-var matchid = "MatchID"; //matchid
-var displaydetail = "Tournament stage"; //displaydetail
+var eventID = "Event ID"; //eventID
+var matchDetail = "Tournament stage"; //matchDetail
 var p1hamind = "1st Shot"; //p1hammerind
 var p2hamind = "Hammer"; //p2hammerind
 var Xgmstowin = 0;  //internal
@@ -107,9 +107,9 @@ function setup()
 	player1 = player1.toUpperCase();
 	player2 = prompt("Enter player/team name #2", "Player 2");
 	player2 = player2.toUpperCase();
-	matchid = prompt("Enter Match ID", matchid);
-	matchid = matchid.toUpperCase();
-	displaydetail = prompt("Enter display detail to show at top of scoreboard, ie Semifinal - First to 11", displaydetail);
+	eventID = prompt("Enter Event ID", eventID);
+	eventID = eventID.toUpperCase();
+	matchDetail = prompt("Enter match detail to show at top of scoreboard, ie Semifinal - First to 11", matchDetail);
 	bestofXgames = prompt("Match is best of X Games (ex. If in Tavistock, X=3 as the match is a best of 3 games. Whereas a race to 11 points is best of 1 game)",
 							bestofXgames);	
 	Xgmstowin = Math.ceil(bestofXgames/2)
@@ -177,7 +177,7 @@ function resetMatch()
     document.getElementById("curshooter").innerHTML = curshooter;
     document.getElementById("p1_gms_disp").innerHTML = player1Games;
     document.getElementById("p2_gms_disp").innerHTML = player2Games;
-    document.getElementById("player1DisksShot").innerHTML = player1DisksShot; 
+    document.getElementById("player1DisksShot").innerHTML = player1DisksShot ; 
     document.getElementById("player2DisksShot").innerHTML = player2DisksShot;
 }
 
@@ -188,8 +188,8 @@ function page_update(x) {
   if (x==0){ //setup call
     document.getElementById("player1").innerHTML = player1
     document.getElementById("player2").innerHTML = player2
-    document.getElementById("matchid").innerHTML = matchid
-    document.getElementById("displaydetail").innerHTML = displaydetail
+    document.getElementById("eventID").innerHTML = eventID
+    document.getElementById("matchDetail").innerHTML = matchDetail
     document.getElementById("bestofXgames").innerHTML = "Best of " + bestofXgames + " Games"
     document.getElementById("Xptstowin").innerHTML = "(First to " + Xptstowin + " Points)" }
 
@@ -606,11 +606,11 @@ function fontsize() {
 
 //changes the centring the tournament name in the scoreboard table
 function changecolspan() {
-  var k = document.getElementById("matchid").colSpan;
+  var k = document.getElementById("eventID").colSpan;
   if (k == 4) {
-    document.getElementById("matchid").colSpan = 5;
+    document.getElementById("eventID").colSpan = 5;
   } else {
-    document.getElementById("matchid").colSpan = 4;
+    document.getElementById("eventID").colSpan = 4;
   }
 }
 
