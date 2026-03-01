@@ -20,28 +20,34 @@ var d1 = 0;
 var n1 = 0;
 
 //Calls setTime function and then iterates again every 0.1 seconds
-function startmatchtime() {
-  var d = new Date();
-  var n = d.getTime()/1000;
-  totalSeconds = n - n1
-  setTime()
-  setTimeout(startmatchtime, 100)
+function startmatchtime() 
+{
+	var d = new Date();
+	var n = d.getTime()/1000;
+	totalSeconds = n - n1
+	setTime()
+	setTimeout(startmatchtime, 100)
 }
 
 //Updates sheet to show current time
-function setTime() {
-  tenthsLabel.innerHTML = parseInt(totalSeconds * 10) % 10;
-  secondsLabel.innerHTML = pad(parseInt(totalSeconds % 60));
-  minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+function setTime() 
+{
+	tenthsLabel.innerHTML = parseInt(totalSeconds * 10) % 10;
+	secondsLabel.innerHTML = pad(parseInt(totalSeconds % 60));
+	minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
 }
 
-function pad(val) {
-  var valString = val + "";
-  if (valString.length < 2) {
-    return "0" + valString;
-  } else {
-    return valString;
-  }
+function pad(val) 
+{
+	var valString = val + "";
+	if (valString.length < 2) 
+	{
+		return "0" + valString;
+	} 
+	else 
+	{
+		return valString;
+	}
 }
 
 ///////////////////////////////////////////////////////////All score related elements
@@ -89,6 +95,92 @@ var p1hamind = "1st Shot"; //p1hammerind
 var p2hamind = "Hammer"; //p2hammerind
 var Xgmstowin = 0;  //internal
 
+//Setup game info to enter match data like player names, match name, and the criteria to win the match
+  //calls resetround() and startmatchtime() - RE-evaluate the use of this
+  //adds event listener so that keyboard shortcuts can be used
+  //-(Apr 7, 2020) Working decently, stuff to improve like remove redundancies and ensuring all keycodes work
+
+
+function setup() 
+{
+	player1 = prompt("Enter player/team name #1", "Player 1");
+	player1 = player1.toUpperCase();
+	player2 = prompt("Enter player/team name #2", "Player 2");
+	player2 = player2.toUpperCase();
+	matchid = prompt("Enter Match ID", matchid);
+	matchid = matchid.toUpperCase();
+	displaydetail = prompt("Enter display detail to show at top of scoreboard, ie Semifinal - First to 11", displaydetail);
+	bestofXgames = prompt("Match is best of X Games (ex. If in Tavistock, X=3 as the match is a best of 3 games. Whereas a race to 11 points is best of 1 game)",
+							bestofXgames);	
+	Xgmstowin = Math.ceil(bestofXgames/2)
+	Xptstowin = prompt("Each game requires X points to win (ex. If in Tavistock, X=5, whereas a race to 9 points has X=9)", Xptstowin);
+	numdiscs = parseInt(prompt("Each round consists of X discs each. (max 13 for disc visuals)", numdiscs));
+
+	//initial time variables
+	d1 = new Date();
+	n1 = d1.getTime()/1000;
+
+	page_update(0);
+	discupdate(0);
+	startmatchtime();
+	// swaphammer(); //Calling so that Next Shot dialog populates
+	p2hamind = "Hammer"
+	p1hamind = "1st Shot"
+	curshooter = 1
+	document.getElementById("curshooter_disp").innerHTML = document.getElementById("player1").innerHTML
+
+	document.body.addEventListener("keydown", function(e) 
+	{
+		var keyCode1 = e.keyCode;
+		if (keyCode1 == 49) {shotupdate(1);}
+		if (keyCode1 == 50) {shotupdate(2);}
+		if (keyCode1 == 57) {shotupdate(9);}
+		if (keyCode1 == 52) {ptsupdate(4);}
+		if (keyCode1 == 53) {ptsupdate(5);}
+		if (keyCode1 == 54) {ptsupdate(6);}
+		if (keyCode1 == 48) {swaphammer();}
+		if (keyCode1 == 84) {shotattempt(1);}
+		if (keyCode1 == 68) {shotattempt(2);}
+		if (keyCode1 == 65) {shotattempt(3);}
+		if (keyCode1 == 72) {shotattempt(4);}
+		if (keyCode1 == 82) {shotattempt(5);}
+		if (keyCode1 == 70) {shotattempt(6);}
+		if (keyCode1 == 80) {shotattempt(7);}
+		if (keyCode1 == 85) {shotattempt(8);}
+		if (keyCode1 == 67) {shotgrade(0);}
+		if (keyCode1 == 86) {shotgrade(1);}
+		if (keyCode1 == 66) {shotgrade(2);}
+		if (keyCode1 == 78) {shotgrade(3);}
+		if (keyCode1 == 77) {shotgrade(4);}
+
+	})
+
+}
+
+function resetMatch()
+{
+	slidenumber = 1; //slide_number
+	curshooter = 1;  //curshooter & curshooter_disp
+	player1DisksShot = 0; //player1DisksShot
+	player2DisksShot = 0; //player2DisksShot
+	player1Twenties = 0; //p1_20s & p1_20s_disp
+	player2Twenties = 0; //p2_20s & p2_20s_disp
+	player1Points = 0; //p1_pts & p1_pts_disp
+	player2Points = 0; //p2_pts & p2_pts_disp
+	player1Games = 0; //p1_gms & p1_gms_disp
+	player2Games = 0; //p2_gms & p2_gms_disp
+    document.getElementById("p1_20s").innerHTML = player1Twenties;
+    document.getElementById("p1_20s_disp").innerHTML = player1Twenties;
+    document.getElementById("p2_20s").innerHTML = player2Twenties;
+    document.getElementById("p2_20s_disp").innerHTML = player2Twenties;
+    document.getElementById("slide_number").innerHTML = slidenumber;
+    document.getElementById("curshooter").innerHTML = curshooter;
+    document.getElementById("p1_gms_disp").innerHTML = player1Games;
+    document.getElementById("p2_gms_disp").innerHTML = player2Games;
+    document.getElementById("player1DisksShot").innerHTML = player1DisksShot; 
+    document.getElementById("player2DisksShot").innerHTML = player2DisksShot;
+}
+
 //updates html for latest javascript values
   //x is used as indicator for type of update so not all elements are called on to update if unnecessary
   //working as intended (Apr 7, 2020)
@@ -115,14 +207,6 @@ function page_update(x) {
     document.getElementById("p2_20s_disp").innerHTML = player2Twenties
     document.getElementById("slide_number").innerHTML = slidenumber
     document.getElementById("curshooter").innerHTML = curshooter
-    // if (curshooter == 2) 
-    // {
-    //   document.getElementById("curshooter_disp").innerHTML = player1;
-    // } //not sure why but these need to be backwards -> because used below
-    // if (curshooter == 1) 
-    // {
-    //   document.getElementById("curshooter_disp").innerHTML = player2;
-    // }
     document.getElementById("player1DisksShot").innerHTML = player1DisksShot
     document.getElementById("player2DisksShot").innerHTML = player2DisksShot
     swapShooter();
@@ -161,62 +245,6 @@ function page_update(x) {
 
 }
 
-//Setup game info to enter match data like player names, match name, and the criteria to win the match
-  //calls resetround() and startmatchtime() - RE-evaluate the use of this
-  //adds event listener so that keyboard shortcuts can be used
-  //-(Apr 7, 2020) Working decently, stuff to improve like remove redundancies and ensuring all keycodes work
-function setup() {
-  player1 = prompt("Enter player/team name #1", "C Reinman");
-  player1 = player1.toUpperCase();
-  player2 = prompt("Enter player/team name #2", "D Carr");
-  player2 = player2.toUpperCase();
-  matchid = prompt("Enter Match ID", "2019 World Championship");
-  matchid = matchid.toUpperCase();
-  displaydetail = prompt("Enter display detail to show at top of scoreboard, ie Semifinal - First to 11", "Semifinal")
-  bestofXgames = prompt("Match is best of X Games (ex. If in Tavistock, X=3 as the match is a best of 3 games. Whereas a race to 11 points is best of 1 game)", "3");
-  Xgmstowin = Math.ceil(bestofXgames/2)
-  Xptstowin = prompt("Each game requires X points to win (ex. If in Tavistock, X=5, whereas a race to 9 points has X=9)", "5");
-  numdiscs = parseInt(prompt("Each round consists of X discs each. (max 13 for disc visuals)", "8"));
-
-  //initial time variables
-  d1 = new Date();
-  n1 = d1.getTime()/1000;
-
-  page_update(0);
-  discupdate(0);
-  startmatchtime();
-  // swaphammer(); //Calling so that Next Shot dialog populates
-  p2hamind = "Hammer"
-  p1hamind = "1st Shot"
-  curshooter = 1
-  document.getElementById("curshooter_disp").innerHTML = document.getElementById("player1").innerHTML
-
-  document.body.addEventListener("keydown", function(e) {
-    var keyCode1 = e.keyCode;
-    if (keyCode1 == 49) {shotupdate(1);}
-    if (keyCode1 == 50) {shotupdate(2);}
-    if (keyCode1 == 57) {shotupdate(9);}
-    if (keyCode1 == 52) {ptsupdate(4);}
-    if (keyCode1 == 53) {ptsupdate(5);}
-    if (keyCode1 == 54) {ptsupdate(6);}
-    if (keyCode1 == 48) {swaphammer();}
-    if (keyCode1 == 84) {shotattempt(1);}
-    if (keyCode1 == 68) {shotattempt(2);}
-    if (keyCode1 == 65) {shotattempt(3);}
-    if (keyCode1 == 72) {shotattempt(4);}
-    if (keyCode1 == 82) {shotattempt(5);}
-    if (keyCode1 == 70) {shotattempt(6);}
-    if (keyCode1 == 80) {shotattempt(7);}
-    if (keyCode1 == 85) {shotattempt(8);}
-    if (keyCode1 == 67) {shotgrade(0);}
-    if (keyCode1 == 86) {shotgrade(1);}
-    if (keyCode1 == 66) {shotgrade(2);}
-    if (keyCode1 == 78) {shotgrade(3);}
-    if (keyCode1 == 77) {shotgrade(4);}
-
-})
-
-}
 
 //Swap Hammer - Working as intended (Apr 7, 2020)
   //swaps hammer indicator and sets curshooter to the opponent
