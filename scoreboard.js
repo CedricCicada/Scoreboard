@@ -537,10 +537,6 @@ function discupdate(x)
       document.getElementById(Xdisc).style.backgroundColor = p1disccolor;
       document.getElementById(Ydisc).setAttribute("class", "disc2remain");
       document.getElementById(Ydisc).style.backgroundColor = p2disccolor;
-      if (i == 1)
-      {
-        document.getElementById(Xdisc).style.backgroundColor = "green";
-      }
     }
   }
   //remove discs as shot
