@@ -2,13 +2,10 @@
 //Clock variables, all start at 0 by default
 var minutesLabel = document.getElementById("minutes");
 var secondsLabel = document.getElementById("seconds");
-var tenthsLabel = document.getElementById("tenths");
 var minutesLabel1 = document.getElementById("minutes1");
 var secondsLabel1 = document.getElementById("seconds1");
-var tenthsLabel1 = document.getElementById("tenths1");
 var minutesLabel2 = document.getElementById("minutes2");
 var secondsLabel2 = document.getElementById("seconds2");
-var tenthsLabel2 = document.getElementById("tenths2");
 var totalSeconds = 0;
 var totalSeconds1 = 0;
 var totalSeconds2 = 0;
@@ -32,7 +29,6 @@ function startmatchtime()
 //Updates sheet to show current time
 function setTime() 
 {
-	tenthsLabel.innerHTML = parseInt(totalSeconds * 10) % 10;
 	secondsLabel.innerHTML = pad(parseInt(totalSeconds % 60));
 	minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
 }
@@ -296,7 +292,6 @@ function shotupdate(actionCode)
     discupdate(1);
 
     totalSeconds1 += intervalSeconds
-    tenthsLabel1.innerHTML = parseInt(totalSeconds1 * 10) % 10;
     secondsLabel1.innerHTML = pad(parseInt(totalSeconds1 % 60));
     minutesLabel1.innerHTML = pad(parseInt(totalSeconds1 / 60));
   }
@@ -315,7 +310,6 @@ function shotupdate(actionCode)
     discupdate(2);
 
     totalSeconds2 += intervalSeconds;
-    tenthsLabel2.innerHTML = parseInt(totalSeconds2 * 10) % 10;
     secondsLabel2.innerHTML = pad(parseInt(totalSeconds2 % 60));
     minutesLabel2.innerHTML = pad(parseInt(totalSeconds2 / 60));
   }
