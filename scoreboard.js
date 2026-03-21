@@ -99,54 +99,13 @@ var Xgmstowin = 0;  //internal
 
 function setup() 
 {
-    player1 = prompt("Enter player/team name #1", "Player 1");
-    player1 = player1.toUpperCase();
-    player2 = prompt("Enter player/team name #2", "Player 2");
-    player2 = player2.toUpperCase();
-    eventID = prompt("Enter Event ID", eventID);
-    eventID = eventID.toUpperCase();
-    matchDetail = prompt("Enter match detail to show at top of scoreboard, ie Semifinal - First to 11", 
-                          matchDetail);
-    bestofXgames = prompt("Match is best of X Games (ex. If in Tavistock, X=3 as the match is a best of 3 games. Whereas a race to 11 points is best of 1 game)",
-                          bestofXgames);	
-    Xgmstowin = Math.ceil(bestofXgames/2)
-    Xptstowin = prompt("Each game requires X points to win (ex. If in Tavistock, X=5, whereas a race to 9 points has X=9)", 
-                        Xptstowin);
-    numdiscs = parseInt(prompt("Each round consists of X discs each. (max 13 for disc visuals)", numdiscs));
+    get_user_input();
+    initialize_counters();
+    initialize_time();
+    initialize_display();
 
-    slidenumber = 1; //slide_number
-    curshooter = 1;  //curshooter & curshooter_disp
-    player1DisksShot = 0; //player1DisksShot
-    player2DisksShot = 0; //player2DisksShot
-    player1Twenties = 0; //p1_20s & p1_20s_disp
-    player2Twenties = 0; //p2_20s & p2_20s_disp
-    player1Points = 0; //p1_pts & p1_pts_disp
-    player2Points = 0; //p2_pts & p2_pts_disp
-    player1Games = 0; //p1_gms & p1_gms_disp
-    player2Games = 0; //p2_gms & p2_gms_disp
-    document.getElementById("p1_20s").innerHTML = player1Twenties;
-    document.getElementById("p1_20s_disp").innerHTML = player1Twenties;
-    document.getElementById("p2_20s").innerHTML = player2Twenties;
-    document.getElementById("p2_20s_disp").innerHTML = player2Twenties;
-    document.getElementById("slide_number").innerHTML = slidenumber;
-    document.getElementById("curshooter").innerHTML = curshooter;
-    document.getElementById("p1_gms_disp").innerHTML = player1Games;
-    document.getElementById("p2_gms_disp").innerHTML = player2Games;
-    document.getElementById("player1DisksShot").innerHTML = player1DisksShot ; 
-    document.getElementById("player2DisksShot").innerHTML = player2DisksShot;
-
-    //initial time variables
-	d1 = new Date();
-	n1 = d1.getTime()/1000;
-
-	page_update(0);
 	discupdate(0);
 	startmatchtime();
-	// swaphammer(); //Calling so that Next Shot dialog populates
-	p2hamind = "Hammer"
-	p1hamind = "1st Shot"
-	curshooter = 1
-	document.getElementById("curshooter_disp").innerHTML = document.getElementById("player1").innerHTML
 
 	document.body.addEventListener("keydown", function(e) 
 	{
@@ -176,22 +135,103 @@ function setup()
 
 }
 
-//updates html for latest javascript values
-  //x is used as indicator for type of update so not all elements are called on to update if unnecessary
-  //working as intended (Apr 7, 2020)
-function page_update(x) {
-  if (x==0){ //setup call
+function get_user_input()
+{
+    player1 = prompt("Enter player/team name #1", "Player 1");
+    player1 = player1.toUpperCase();
+    player2 = prompt("Enter player/team name #2", "Player 2");
+    player2 = player2.toUpperCase();
+    eventID = prompt("Enter Event ID", eventID);
+    eventID = eventID.toUpperCase();
+    matchDetail = prompt("Enter match detail to show at top of scoreboard, ie Semifinal - First to 11", 
+                          matchDetail);
+    bestofXgames = prompt("Match is best of X Games (ex. If in Tavistock, X=3 as the match is a best of 3 games. Whereas a race to 11 points is best of 1 game)",
+                          bestofXgames);	
+    Xgmstowin = Math.ceil(bestofXgames/2)
+    Xptstowin = prompt("Each game requires X points to win (ex. If in Tavistock, X=5, whereas a race to 9 points has X=9)", 
+                        Xptstowin);
+    numdiscs = parseInt(prompt("Each round consists of X discs each. (max 13 for disc visuals)", numdiscs));    
+}
+
+function initialize_counters()
+{
+    // Initialize counters
+    slidenumber = 1; //slide_number
+    curshooter = 1;  //curshooter & curshooter_disp
+    player1DisksShot = 0; //player1DisksShot
+    player2DisksShot = 0; //player2DisksShot
+    player1Twenties = 0; //p1_20s & p1_20s_disp
+    player2Twenties = 0; //p2_20s & p2_20s_disp
+    player1Points = 0; //p1_pts & p1_pts_disp
+    player2Points = 0; //p2_pts & p2_pts_disp
+    player1Games = 0; //p1_gms & p1_gms_disp
+    player2Games = 0; //p2_gms & p2_gms_disp
+
+    // Initialize counter display elements
+    document.getElementById("p1_20s").innerHTML = player1Twenties;
+    document.getElementById("p1_20s_disp").innerHTML = player1Twenties;
+    document.getElementById("p2_20s").innerHTML = player2Twenties;
+    document.getElementById("p2_20s_disp").innerHTML = player2Twenties;
+    document.getElementById("slide_number").innerHTML = slidenumber;
+    document.getElementById("curshooter").innerHTML = curshooter;
+    document.getElementById("p1_gms_disp").innerHTML = player1Games;
+    document.getElementById("p2_gms_disp").innerHTML = player2Games;
+    document.getElementById("player1DisksShot").innerHTML = player1DisksShot ; 
+    document.getElementById("player2DisksShot").innerHTML = player2DisksShot;
+}
+
+function initialize_time()
+{
+	d1 = new Date();
+	n1 = d1.getTime()/1000;
+}
+
+function initialize_display()
+{
+    // formerly page_update(0)
     document.getElementById("player1").innerHTML = player1;
     document.getElementById("player2").innerHTML = player2;
     document.getElementById("eventid").innerHTML = eventID;
     document.getElementById("matchDetail").innerHTML = matchDetail;
     document.getElementById("bestofXgames").innerHTML = "Best of " + bestofXgames + " Games";
-    document.getElementById("Xptstowin").innerHTML = "(First to " + Xptstowin + " Points)" };
+    document.getElementById("Xptstowin").innerHTML = "(First to " + Xptstowin + " Points)"; 
+    // end formerly page_update(0)
 
-  if (x==1){ //swaphammer call
+    p2hamind = "Hammer";
+	p1hamind = "1st Shot";
+	curshooter = 1;
+	document.getElementById("curshooter_disp").innerHTML = document.getElementById("player1").innerHTML;
+
+    set_up_disks_for_round();
+
+}
+
+function set_up_disks_for_round()
+{
+    var i;
+    for (i = 1; i <= numdiscs; i++) 
+    {
+        var player1DiskName = "p1disc" + i;
+        var player2DiskName = "p2disc" + i;
+        document.getElementById(player1DiskName).setAttribute("class", "disc1remain");
+        document.getElementById(player1DiskName).style.backgroundColor = p1disccolor;
+        document.getElementById(player2DiskName).setAttribute("class", "disc2remain");
+        document.getElementById(player2DiskName).style.backgroundColor = p2disccolor;
+    }
+}
+
+//updates html for latest javascript values
+  //x is used as indicator for type of update so not all elements are called on to update if unnecessary
+  //working as intended (Apr 7, 2020)
+function page_update(x) 
+{
+
+  if (x==1)
+    { //swaphammer call
     document.getElementById("curshooter").innerHTML = curshooter
     document.getElementById("p2hammerind").innerHTML = p2hamind
-    document.getElementById("p1hammerind").innerHTML = p1hamind}
+    document.getElementById("p1hammerind").innerHTML = p1hamind
+}
 
   if (x==2){ //shot update call
     document.getElementById("timelength").innerHTML = Math.round(intervalSeconds*100)/100 //needs to be set in before shotlog
@@ -522,16 +562,16 @@ function discupdate(x)
   //and add discs back
   if (x == 0) 
   {
-    var i;
-    for (i=1; i <= numdiscs; i++) 
-    {
-      var Xdisc = "p1disc" + i;
-      var Ydisc = "p2disc" + i;
-      document.getElementById(Xdisc).setAttribute("class", "disc1remain");
-      document.getElementById(Xdisc).style.backgroundColor = p1disccolor;
-      document.getElementById(Ydisc).setAttribute("class", "disc2remain");
-      document.getElementById(Ydisc).style.backgroundColor = p2disccolor;
-    }
+    // var i;
+    // for (i=1; i <= numdiscs; i++) 
+    // {
+    //   var Xdisc = "p1disc" + i;
+    //   var Ydisc = "p2disc" + i;
+    //   document.getElementById(Xdisc).setAttribute("class", "disc1remain");
+    //   document.getElementById(Xdisc).style.backgroundColor = p1disccolor;
+    //   document.getElementById(Ydisc).setAttribute("class", "disc2remain");
+    //   document.getElementById(Ydisc).style.backgroundColor = p2disccolor;
+    // }
   }
   //remove discs as shot
   if (x == 1) {
