@@ -87,13 +87,14 @@ var gamenumber = 1; //game_number
 var numdiscs = 8; //internal javascript only - unless disc display references
 var bestofXgames = 1; //bestofXgames
 var Xptstowin = 5; //Xptstowin
+var Xgmstowin = 0;  //internal
 var player1 = "P1"; //player1
 var player2 = "P2"; //player2
 var eventID = "Event ID"; //eventID
 var matchDetail = "Tournament stage"; //matchDetail
 var p1hamind = "1st Shot"; //p1hammerind
 var p2hamind = "Hammer"; //p2hammerind
-var Xgmstowin = 0;  //internal
+var shortcutsCreated = false;
 
 //Setup game info to enter match data like player names, match name, and the criteria to win the match
   //calls resetround() and startmatchtime() - RE-evaluate the use of this
@@ -152,32 +153,35 @@ function setup()
 	curshooter = 1
 	document.getElementById("curshooter_disp").innerHTML = document.getElementById("player1").innerHTML
 
-	document.body.addEventListener("keydown", function(e) 
-	{
-		var keyCode1 = e.keyCode;
-		if (keyCode1 == 49) {shotupdate(1);}
-		if (keyCode1 == 50) {shotupdate(2);}
-		if (keyCode1 == 57) {shotupdate(9);}
-		if (keyCode1 == 52) {ptsupdate(4);}
-		if (keyCode1 == 53) {ptsupdate(5);}
-		if (keyCode1 == 54) {ptsupdate(6);}
-		if (keyCode1 == 48) {swaphammer();}
-		if (keyCode1 == 84) {shotattempt(1);}
-		if (keyCode1 == 68) {shotattempt(2);}
-		if (keyCode1 == 65) {shotattempt(3);}
-		if (keyCode1 == 72) {shotattempt(4);}
-		if (keyCode1 == 82) {shotattempt(5);}
-		if (keyCode1 == 70) {shotattempt(6);}
-		if (keyCode1 == 80) {shotattempt(7);}
-		if (keyCode1 == 85) {shotattempt(8);}
-		if (keyCode1 == 67) {shotgrade(0);}
-		if (keyCode1 == 86) {shotgrade(1);}
-		if (keyCode1 == 66) {shotgrade(2);}
-		if (keyCode1 == 78) {shotgrade(3);}
-		if (keyCode1 == 77) {shotgrade(4);}
+    if (!shortcutsCreated)
+    {
+        shortcutsCreated = true;
+        document.body.addEventListener("keydown", function(e) 
+        {
+            var keyCode1 = e.keyCode;
+            if (keyCode1 == 49) {shotupdate(1);}
+            if (keyCode1 == 50) {shotupdate(2);}
+            if (keyCode1 == 57) {shotupdate(9);}
+            if (keyCode1 == 52) {ptsupdate(4);}
+            if (keyCode1 == 53) {ptsupdate(5);}
+            if (keyCode1 == 54) {ptsupdate(6);}
+            if (keyCode1 == 48) {swaphammer();}
+            if (keyCode1 == 84) {shotattempt(1);}
+            if (keyCode1 == 68) {shotattempt(2);}
+            if (keyCode1 == 65) {shotattempt(3);}
+            if (keyCode1 == 72) {shotattempt(4);}
+            if (keyCode1 == 82) {shotattempt(5);}
+            if (keyCode1 == 70) {shotattempt(6);}
+            if (keyCode1 == 80) {shotattempt(7);}
+            if (keyCode1 == 85) {shotattempt(8);}
+            if (keyCode1 == 67) {shotgrade(0);}
+            if (keyCode1 == 86) {shotgrade(1);}
+            if (keyCode1 == 66) {shotgrade(2);}
+            if (keyCode1 == 78) {shotgrade(3);}
+            if (keyCode1 == 77) {shotgrade(4);}
 
-	})
-
+        })
+    }
 }
 
 //updates html for latest javascript values
