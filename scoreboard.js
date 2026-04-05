@@ -105,7 +105,7 @@ function setup()
     initialize_time();
     initialize_display();
 
-	discupdate(0);
+    discupdate(0);
 	startmatchtime();
 
     if (!shortcutsCreated)
@@ -566,6 +566,7 @@ function discupdate(x)
   //and add discs back
   if (x == 0) 
   {
+    set_up_disks_for_round();
     // var i;
     // for (i=1; i <= numdiscs; i++) 
     // {
