@@ -107,36 +107,41 @@ function setup()
 
     discupdate(0);
 	startmatchtime();
+    set_up_key_handler();
+}
 
+function set_up_key_handler()
+{
     if (!shortcutsCreated)
     {
         shortcutsCreated = true;
-        document.body.addEventListener("keydown", function(e) 
-        {
-            var keyCode1 = e.keyCode;
-            if (keyCode1 == 49) {shotupdate(1);}
-            if (keyCode1 == 50) {shotupdate(2);}
-            if (keyCode1 == 57) {shotupdate(9);}
-            if (keyCode1 == 52) {ptsupdate(4);}
-            if (keyCode1 == 53) {ptsupdate(5);}
-            if (keyCode1 == 54) {ptsupdate(6);}
-            if (keyCode1 == 48) {swaphammer();}
-            if (keyCode1 == 84) {shotattempt(1);}
-            if (keyCode1 == 68) {shotattempt(2);}
-            if (keyCode1 == 65) {shotattempt(3);}
-            if (keyCode1 == 72) {shotattempt(4);}
-            if (keyCode1 == 82) {shotattempt(5);}
-            if (keyCode1 == 70) {shotattempt(6);}
-            if (keyCode1 == 80) {shotattempt(7);}
-            if (keyCode1 == 85) {shotattempt(8);}
-            if (keyCode1 == 67) {shotgrade(0);}
-            if (keyCode1 == 86) {shotgrade(1);}
-            if (keyCode1 == 66) {shotgrade(2);}
-            if (keyCode1 == 78) {shotgrade(3);}
-            if (keyCode1 == 77) {shotgrade(4);}
-
-        })
+        document.body.addEventListener("keydown", handle_keypress);
     }
+}
+
+function handle_keypress(e)
+{
+    var keyCode1 = e.keyCode;
+    if (keyCode1 == 49) {shotupdate(1);}
+    if (keyCode1 == 50) {shotupdate(2);}
+    if (keyCode1 == 57) {shotupdate(9);}
+    if (keyCode1 == 52) {ptsupdate(4);}
+    if (keyCode1 == 53) {ptsupdate(5);}
+    if (keyCode1 == 54) {ptsupdate(6);}
+    if (keyCode1 == 48) {swaphammer();}
+    if (keyCode1 == 84) {shotattempt(1);}
+    if (keyCode1 == 68) {shotattempt(2);}
+    if (keyCode1 == 65) {shotattempt(3);}
+    if (keyCode1 == 72) {shotattempt(4);}
+    if (keyCode1 == 82) {shotattempt(5);}
+    if (keyCode1 == 70) {shotattempt(6);}
+    if (keyCode1 == 80) {shotattempt(7);}
+    if (keyCode1 == 85) {shotattempt(8);}
+    if (keyCode1 == 67) {shotgrade(0);}
+    if (keyCode1 == 86) {shotgrade(1);}
+    if (keyCode1 == 66) {shotgrade(2);}
+    if (keyCode1 == 78) {shotgrade(3);}
+    if (keyCode1 == 77) {shotgrade(4);}
 }
 
 function get_user_input()
