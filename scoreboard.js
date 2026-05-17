@@ -1,61 +1,4 @@
-//////////////////////////////////////////////////////////////All time related elements
-//Clock variables, all start at 0 by default
-var minutesLabel = document.getElementById("minutes");
-var secondsLabel = document.getElementById("seconds");
-var tenthsLabel = document.getElementById("tenths");
-var minutesLabel1 = document.getElementById("minutes1");
-var secondsLabel1 = document.getElementById("seconds1");
-var tenthsLabel1 = document.getElementById("tenths1");
-var minutesLabel2 = document.getElementById("minutes2");
-var secondsLabel2 = document.getElementById("seconds2");
-var tenthsLabel2 = document.getElementById("tenths2");
-var totalSeconds = 0;
-var totalSeconds1 = 0;
-var totalSeconds2 = 0;
-var intervalSeconds = 0;
-var prevSeconds = 0;
-
-//Variables for gettime() functionality
-var d1 = 0;
-var n1 = 0;
-
-//Calls setTime function and then iterates again every 0.1 seconds
-function startmatchtime() 
-{
-	var d = new Date();
-	var n = d.getTime()/1000;
-	totalSeconds = n - n1
-	setTime()
-	setTimeout(startmatchtime, 100)
-}
-
-//Updates sheet to show current time
-function setTime() 
-{
-	tenthsLabel.innerHTML = parseInt(totalSeconds * 10) % 10;
-	secondsLabel.innerHTML = pad(parseInt(totalSeconds % 60));
-	minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
-}
-
-function pad(val) 
-{
-	var valString = val + "";
-	if (valString.length < 2) 
-	{
-		return "0" + valString;
-	} 
-	else 
-	{
-		return valString;
-	}
-}
-
 ///////////////////////////////////////////////////////////All score related elements
-  /////////////////////////Javascript needs one key variable to associate with all key variables in html
-  /////////Needs to read in key variables from initial call
-  /////////Then needs to update for following functions: swaphammer, shotupdate, ptsupdate, gmsupdate
-  /////////Then needs to send update to html page: page_update()
-
 
 //Key variables defaults and corresponding html id
 var slidenumber = 1; //slide_number
@@ -99,8 +42,6 @@ var shortcutsCreated = false;
 //Setup game info to enter match data like player names, match name, and the criteria to win the match
   //calls resetround() and startmatchtime() - RE-evaluate the use of this
   //adds event listener so that keyboard shortcuts can be used
-  //-(Apr 7, 2020) Working decently, stuff to improve like remove redundancies and ensuring all keycodes work
-
 
 function setup() 
 {
@@ -140,18 +81,12 @@ function setup()
     document.getElementById("player1DisksShot").innerHTML = player1DisksShot ; 
     document.getElementById("player2DisksShot").innerHTML = player2DisksShot;
 
-    //initial time variables
-	d1 = new Date();
-	n1 = d1.getTime()/1000;
-
-	page_update(0);
-	discupdate(0);
-	startmatchtime();
-	// swaphammer(); //Calling so that Next Shot dialog populates
-	p2hamind = "Hammer"
-	p1hamind = "1st Shot"
-	curshooter = 1
-	document.getElementById("curshooter_disp").innerHTML = document.getElementById("player1").innerHTML
+    page_update(0);
+    discupdate(0);
+    p2hamind = "Hammer"
+    p1hamind = "1st Shot"
+    curshooter = 1
+    document.getElementById("curshooter_disp").innerHTML = document.getElementById("player1").innerHTML
 
     if (!shortcutsCreated)
     {
@@ -202,7 +137,6 @@ function page_update(x) {
     document.getElementById("p1hammerind").innerHTML = p1hamind}
 
   if (x==2){ //shot update call
-    document.getElementById("timelength").innerHTML = Math.round(intervalSeconds*100)/100 //needs to be set in before shotlog
     shotlog(); //call shotlog function
     document.getElementById("p1_20s").innerHTML = player1Twenties
     document.getElementById("p1_20s_disp").innerHTML = player1Twenties
@@ -216,7 +150,6 @@ function page_update(x) {
   }
 
   if (x==3){ //pts update, shots and 20s should be 0s
-    document.getElementById("timelength").innerHTML = Math.round(intervalSeconds*100)/100 //needs to be set in before shotlog
     shotlog();
     document.getElementById("p1_20s").innerHTML = player1Twenties
     document.getElementById("p1_20s_disp").innerHTML = player1Twenties
@@ -234,7 +167,6 @@ function page_update(x) {
     document.getElementById("p2_pts_disp").innerHTML = player2Points}
 
   if (x==4){ //pts update and games update
-    document.getElementById("timelength").innerHTML = Math.round(intervalSeconds*100)/100 //needs to be set in before shotlog
     shotlog();
     document.getElementById("slide_number").innerHTML = slidenumber
     document.getElementById("p1_pts").innerHTML = player1Points
@@ -284,8 +216,6 @@ function shotupdate(actionCode)
   saveCurrentShots();
   saveCurrentScore();
 
-  intervalSeconds = totalSeconds - prevSeconds //setting interal that will be outputted
-  prevSeconds = totalSeconds //bumping up prevSeconds so it can be used in next calc
   if (curshooter == 1) 
   {
     if (actionCode == 2) 
@@ -298,11 +228,6 @@ function shotupdate(actionCode)
     }
     player1DisksShot += 1;
     discupdate(1);
-
-    totalSeconds1 += intervalSeconds
-    tenthsLabel1.innerHTML = parseInt(totalSeconds1 * 10) % 10;
-    secondsLabel1.innerHTML = pad(parseInt(totalSeconds1 % 60));
-    minutesLabel1.innerHTML = pad(parseInt(totalSeconds1 / 60));
   }
 
   if (curshooter == 2) 
@@ -317,11 +242,6 @@ function shotupdate(actionCode)
     }
     player2DisksShot += 1;
     discupdate(2);
-
-    totalSeconds2 += intervalSeconds;
-    tenthsLabel2.innerHTML = parseInt(totalSeconds2 * 10) % 10;
-    secondsLabel2.innerHTML = pad(parseInt(totalSeconds2 % 60));
-    minutesLabel2.innerHTML = pad(parseInt(totalSeconds2 / 60));
   }
 
   updatestats(curshooter); //calls formula only after shot is taken (not calling when points are updated)
@@ -332,8 +252,6 @@ function shotupdate(actionCode)
   {
     document.getElementById("curshooter_disp").innerHTML = "Allocate Points"
   }
-
-  // swapShooter(); //curshooter updated after so that shot logged with the correct shooter
 }
 
 function swapShooter()
@@ -374,7 +292,6 @@ function undoShot()
   player1DisksShot = player1PrevDisksShot;
   player2DisksShot = player2PrevDisksShot;
   slidenumber -= 1;
-  // swapShooter();  swapShooter() is called by page_update(2)
   page_update(2);
   showDisc(curshooter, curshooter == 1 ? player1DiskNumber : player2DiskNumber);
 }
@@ -467,8 +384,6 @@ function ptsupdate(actionCode)
 {
   if ((player1DisksShot >= numdiscs) && (player2DisksShot >= numdiscs)) 
   { //then the round is over
-    intervalSeconds = totalSeconds - prevSeconds; //setting interal that will be outputted
-    prevSeconds = totalSeconds; //bumping up prevSeconds so it can be used in next calc
 
     if (actionCode == 4) // player 1 wins
     {
@@ -491,7 +406,6 @@ function ptsupdate(actionCode)
     player2DisksShot = 0;
     discupdate(0);
     slidenumber +=1 //if you put a semicolon here then it doesn't work for some reason
-    //curshooter = (curshooter-2)*(-1)+1 //flipping curshooter so that hammer switches in following round
     swaphammer();
     page_update(3)
     gmsupdate();
@@ -504,8 +418,6 @@ function gmsupdate() {
   if (!(player1Points == player2Points) && ((player1Points >= Xptstowin) || (player2Points >= Xptstowin))){
       if (player1Points > player2Points){player1Games += 1}
       if (player2Points > player1Points){player2Games += 1}
-    intervalSeconds = totalSeconds - prevSeconds //setting interal that will be outputted
-    prevSeconds = totalSeconds //bumping up prevSeconds so it can be used in next calc
     player1Points = 0
     player2Points = 0
     slidenumber += 1
@@ -597,11 +509,7 @@ function fontsize() {
   document.getElementById("row1").style.fontSize = r1fontsize+"px"
   r4fontsize = prompt("row 4 font size ", "40");
   document.getElementById("row4").style.fontSize = r4fontsize+"px"
-  //font-size.p1name = p1fontsize+"px"
-  //document.getElementById("player1").style.fontSize = p1fontsize+"px";
 }
-
-
 
 //changes the centring the tournament name in the scoreboard table
 function changecolspan() {
