@@ -93,27 +93,48 @@ function setup()
         shortcutsCreated = true;
         document.body.addEventListener("keydown", function(e) 
         {
-            var keyCode1 = e.keyCode;
-            if (keyCode1 == 49) {shotupdate(1);}
-            if (keyCode1 == 50) {shotupdate(2);}
-            if (keyCode1 == 57) {shotupdate(9);}
-            if (keyCode1 == 52) {ptsupdate(4);}
-            if (keyCode1 == 53) {ptsupdate(5);}
-            if (keyCode1 == 54) {ptsupdate(6);}
-            if (keyCode1 == 48) {swaphammer();}
-            if (keyCode1 == 84) {shotattempt(1);}
-            if (keyCode1 == 68) {shotattempt(2);}
-            if (keyCode1 == 65) {shotattempt(3);}
-            if (keyCode1 == 72) {shotattempt(4);}
-            if (keyCode1 == 82) {shotattempt(5);}
-            if (keyCode1 == 70) {shotattempt(6);}
-            if (keyCode1 == 80) {shotattempt(7);}
-            if (keyCode1 == 85) {shotattempt(8);}
-            if (keyCode1 == 67) {shotgrade(0);}
-            if (keyCode1 == 86) {shotgrade(1);}
-            if (keyCode1 == 66) {shotgrade(2);}
-            if (keyCode1 == 78) {shotgrade(3);}
-            if (keyCode1 == 77) {shotgrade(4);}
+            switch (e.key)
+            {
+                case "1": 
+                    shotupdate(1);  // No 20
+                    break;
+                case "2":
+                    shotupdate(2);  // 20
+                    break;
+                case "9":
+                    shotupdate(9);  // Opponent 20
+                    break;
+                case "4":
+                    ptsupdate(4);   // Player 1 wins
+                    break;
+                case "5":
+                    ptsupdate(5);   // Tie
+                    break;
+                case "6":
+                    ptsupdate(6);   // Player 2 wins
+                    break;
+                case "0":
+                    swaphammer();
+                    break;
+                default:
+                    alert("Unexpected key pressed.");
+                    break;
+            }
+            
+            // Statistics keys
+            // if (keyCode1 == 84) {shotattempt(1);} 
+            // if (keyCode1 == 68) {shotattempt(2);}
+            // if (keyCode1 == 65) {shotattempt(3);}
+            // if (keyCode1 == 72) {shotattempt(4);}
+            // if (keyCode1 == 82) {shotattempt(5);}
+            // if (keyCode1 == 70) {shotattempt(6);}
+            // if (keyCode1 == 80) {shotattempt(7);}
+            // if (keyCode1 == 85) {shotattempt(8);}
+            // if (keyCode1 == 67) {shotgrade(0);}
+            // if (keyCode1 == 86) {shotgrade(1);}
+            // if (keyCode1 == 66) {shotgrade(2);}
+            // if (keyCode1 == 78) {shotgrade(3);}
+            // if (keyCode1 == 77) {shotgrade(4);}
 
         })
     }
