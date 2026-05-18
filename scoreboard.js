@@ -120,22 +120,6 @@ function setup()
                     alert("Unexpected key pressed.");
                     break;
             }
-            
-            // Statistics keys
-            // if (keyCode1 == 84) {shotattempt(1);} 
-            // if (keyCode1 == 68) {shotattempt(2);}
-            // if (keyCode1 == 65) {shotattempt(3);}
-            // if (keyCode1 == 72) {shotattempt(4);}
-            // if (keyCode1 == 82) {shotattempt(5);}
-            // if (keyCode1 == 70) {shotattempt(6);}
-            // if (keyCode1 == 80) {shotattempt(7);}
-            // if (keyCode1 == 85) {shotattempt(8);}
-            // if (keyCode1 == 67) {shotgrade(0);}
-            // if (keyCode1 == 86) {shotgrade(1);}
-            // if (keyCode1 == 66) {shotgrade(2);}
-            // if (keyCode1 == 78) {shotgrade(3);}
-            // if (keyCode1 == 77) {shotgrade(4);}
-
         })
     }
 }
@@ -158,7 +142,6 @@ function page_update(x) {
     document.getElementById("p1hammerind").innerHTML = p1hamind}
 
   if (x==2){ //shot update call
-    shotlog(); //call shotlog function
     document.getElementById("p1_20s").innerHTML = player1Twenties
     document.getElementById("p1_20s_disp").innerHTML = player1Twenties
     document.getElementById("p2_20s").innerHTML = player2Twenties
@@ -171,7 +154,6 @@ function page_update(x) {
   }
 
   if (x==3){ //pts update, shots and 20s should be 0s
-    shotlog();
     document.getElementById("p1_20s").innerHTML = player1Twenties
     document.getElementById("p1_20s_disp").innerHTML = player1Twenties
     document.getElementById("p2_20s").innerHTML = player2Twenties
@@ -188,7 +170,6 @@ function page_update(x) {
     document.getElementById("p2_pts_disp").innerHTML = player2Points}
 
   if (x==4){ //pts update and games update
-    shotlog();
     document.getElementById("slide_number").innerHTML = slidenumber
     document.getElementById("p1_pts").innerHTML = player1Points
     document.getElementById("p1_pts_disp").innerHTML = player1Points
@@ -265,7 +246,6 @@ function shotupdate(actionCode)
     discupdate(2);
   }
 
-  updatestats(curshooter); //calls formula only after shot is taken (not calling when points are updated)
   slidenumber += 1;
   page_update(2);
 
@@ -339,64 +319,6 @@ function undoScore()
   document.getElementById("curshooter_disp").innerHTML = "Allocate Points"
 }
 
-//track the total of the shot grades
-var p1ShotGrades = 0;
-var p2ShotGrades = 0;
-var p1Open20Attempts = 0;
-var p1Open20Makes = 0;
-var p1Shots = 0;
-var p1Errors = 0;
-var p2Open20Attempts = 0;
-var p2Open20Makes = 0;
-var p2Shots = 0;
-var p2Errors = 0;
-
-//updates statistics table, x is the 1 or 2 for the current shooter
-function updatestats (x) {
-  var grade = document.getElementById("shotgrade").innerHTML;
-  var gradenumber = parseInt(grade, 10);
-  var attempt = document.getElementById("shotattempt").innerHTML;
-
-  if (attempt == "Open 20") {
-    if (x == 1) {p1Open20Attempts += 1;
-                if (grade == 4) {p1Open20Makes += 1;}
-                document.getElementById("p1Open20Ratio").innerHTML = Math.round(p1Open20Makes/p1Open20Attempts*100);
-                document.getElementById("p1Open20Makes").innerHTML = p1Open20Makes;
-                document.getElementById("p1Open20Attempts").innerHTML = p1Open20Attempts;}
-    if (x == 2) {p2Open20Attempts += 1;
-                if (grade == 4) {p2Open20Makes += 1;}
-                document.getElementById("p2Open20Ratio").innerHTML = Math.round(p2Open20Makes/p2Open20Attempts*100);
-                document.getElementById("p2Open20Makes").innerHTML = p2Open20Makes;
-                document.getElementById("p2Open20Attempts").innerHTML = p2Open20Attempts;}
-    document.getElementById("totalOpen20Ratio").innerHTML = Math.round((p1Open20Makes+p2Open20Makes)
-                                                                       /(p1Open20Attempts+p2Open20Attempts)*100);
-  }
-
-  if (grade == 0) {
-    if (x == 1) {p1Errors += 1;
-                document.getElementById("p1Errors").innerHTML = p1Errors;}
-    if (x == 2) {p2Errors += 1;
-                document.getElementById("p2Errors").innerHTML = p2Errors;}
-    document.getElementById("totalErrors").innerHTML = (p1Errors + p2Errors);
-  }
-
-  if (x == 1) {
-    p1ShotGrades = p1ShotGrades + gradenumber;
-    p1Shots += 1;
-    document.getElementById("p1Shots").innerHTML = p1Shots;
-    document.getElementById("p1ShootingRatio").innerHTML = Math.round(((p1ShotGrades/p1Shots)/4)*100);
-  }
-  if (x == 2) {
-    p2ShotGrades = p2ShotGrades + gradenumber;
-    p2Shots += 1;
-    document.getElementById("p2Shots").innerHTML = p2Shots;
-    document.getElementById("p2ShootingRatio").innerHTML = Math.round(((p2ShotGrades/p2Shots)/4)*100);
-  }
-
-  document.getElementById("totalShootingRatio").innerHTML = Math.round((((p1ShotGrades+p2ShotGrades)
-                                                                         /(p1Shots+p2Shots))/4)*100);
-}
-
 //when round is done (when both sides shot all discs), reset 20s and discs to 0, prompt for board score to determine points to allocate, update page, call gmsupdate
   // - Working as intended (Apr 7, 2020)
   //x=4, 2pts for p1, x=5, 1 pt each, x=6, 2pts for p2
@@ -448,14 +370,6 @@ function gmsupdate() {
                           shotlog();}
   if (player2Games >= Xgmstowin) {//window.alert("Match complete: winner is " + player2)
                           shotlog();} //call shotlog to enter final row with games updated
-}
-
-//updates shotlog when called
-  //think it's done, just need to update shotlog id above to format as desired
-function shotlog () {
-  var log = document.getElementById("Match Log").innerHTML
-            + document.getElementById("shotlog").innerHTML //"<table><tr><td>0</td><td>" + curshooter + "</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr></table>"
-  document.getElementById("Match Log").innerHTML = log;
 }
 
 //disc visuals
@@ -542,90 +456,6 @@ function changecolspan() {
   }
 }
 
-//function puts shot attempt into the shot log row
-  //x indicates type of attempt
-function shotattempt(x) {
-  var k;
-  if (x == 1) {k = "Open 20"}
-  if (x == 2) {k = "Open Defense"}
-  if (x == 3) {k = "Tap"}
-  if (x == 4) {k = "Hit and stick"}
-  if (x == 5) {k = "Hit and roll"}
-  if (x == 6) {k = "Follow through"}
-  if (x == 7) {k = "Peel"}
-  if (x == 8) {k = "Unknown"}
-
-  document.getElementById("shotattempt").innerHTML = k;
-}
-
-//function puts shot grade into the shot log row
-  //x indicates the grade
-function shotgrade (x) {
-  document.getElementById("shotgrade").innerHTML = x;
-}
-
-
-//exports match log table as csv
-function exporttable(){
-    /* Get the HTML data using Element by Id */
-    var table = document.getElementById("Match Log");
-
-    /* Declaring array variable */
-    var rows =[];
-
-      //iterate through rows of table
-    for(var i=0,row; row = table.rows[i];i++){
-        //rows would be accessed using the "row" variable assigned in the for loop
-        //Get each cell value/column from the row
-        column1 = row.cells[0].innerText;
-        column2 = row.cells[1].innerText;
-        column3 = row.cells[2].innerText;
-        column4 = row.cells[3].innerText;
-        column5 = row.cells[4].innerText;
-        column6 = row.cells[5].innerText;
-        column7 = row.cells[6].innerText;
-        column8 = row.cells[7].innerText;
-        column9 = row.cells[8].innerText;
-        column10 = row.cells[9].innerText;
-        column11 = row.cells[10].innerText;
-        column12 = row.cells[11].innerText;
-        column13 = row.cells[12].innerText;
-
-    /* add a new records in the array */
-        rows.push(
-            [
-                column1,
-                column2,
-                column3,
-                column4,
-                column5,
-                column6,
-                column7,
-                column8,
-                column9,
-                column10,
-                column11,
-                column12,
-                column13
-            ]
-        );
-
-        }
-        csvContent = "data:text/csv;charset=utf-8,";
-         /* add the column delimiter as comma(,) and each row splitted by new line character (\n) */
-        rows.forEach(function(rowArray){
-            row = rowArray.join(",");
-            csvContent += row + "\r\n";
-        });
-
-        /* create a hidden <a> DOM node and set its download attribute */
-        var encodedUri = encodeURI(csvContent);
-        var link = document.createElement("a");
-        link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "Match_Log.csv");
-        document.body.appendChild(link);
-        link.click();
-}
 
 // These adjust the widths of the table columns that hold the disk images.  For singles,
 // the columns are wide enough to show eight disks.  For doubles, they are only wide 

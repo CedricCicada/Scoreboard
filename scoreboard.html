@@ -83,76 +83,7 @@
 
       </td>
     </tr>
-    <tr>
-      <td width="40%">
-        <button class="button" onclick="shotattempt(1)">Open 20 (t)</button>
-        <button class="button" onclick="shotattempt(2)">Open Defense (d)</button>
-        <button class="button" onclick="shotattempt(3)">Tap/Raise (a)</button><br/>
-        <button class="button" onclick="shotattempt(4)">Hit and stick (h)</button>
-        <button class="button" onclick="shotattempt(5)">Hit and roll (r)</button><br/>
-        <button class="button" onclick="shotattempt(6)">Follow through (f)</button>
-        <button class="button" onclick="shotattempt(7)">Peel (p)</button>
-        <button class="button" onclick="shotattempt(8)">Unknown (u)</button>
-      </br></br>
-        <button class="button" onclick="shotgrade(0)">Grade 0 (c)</button>
-        <button class="button" onclick="shotgrade(1)">Grade 1 (v)</button>
-        <button class="button" onclick="shotgrade(2)">Grade 2 (b)</button>
-        <button class="button" onclick="shotgrade(3)">Grade 3 (n)</button>
-        <button class="button" onclick="shotgrade(4)">Grade 4 (m)</button>
-
-      </td>
-      <td width="60%">
-        <table class="scoreboard">
-          <tr><th>Statistics</th>
-              <th>Match Time</th><th>Open 20%</th><th>Shooting %</th><th>Major Errors</th><th>Hammer</th></tr>
-
-          <tr><td>P1</td>
-              <td><label id="minutes1">00</label>:<label id="seconds1">00</label>.<label id="tenths1">0</label></td>
-              <td><a id="p1Open20Ratio">0</a>% (<a id="p1Open20Makes">0</a>/<a id="p1Open20Attempts">0</a>)</td>
-              <td><a id="p1ShootingRatio">0</a>% (<a id="p1Shots">0</a>)</td>
-              <td id="p1Errors">0</td>
-              <td><a id="p1hammerind">1st Shot</a></td></tr>
-
-          <tr><td>P2</td>
-              <td><label id="minutes2">00</label>:<label id="seconds2">00</label>.<label id="tenths2">0</label></td>
-              <td><a id="p2Open20Ratio">0</a>% (<a id="p2Open20Makes">0</a>/<a id="p2Open20Attempts">0</a>)</td>
-              <td><a id="p2ShootingRatio">0</a>% (<a id="p2Shots">0</a>)</td>
-              <td id="p2Errors">0</td>
-              <td><a id="p2hammerind">Hammer</a></td></tr>
-
-          <tr><th>Total</th>
-              <th><label id="minutes">00</label>:<label id="seconds">00</label>.<label id="tenths">0</label></th>
-              <th><a id="totalOpen20Ratio">0</a>%</th>
-              <th><a id="totalShootingRatio">0</a>%</th>
-              <th id="totalErrors">0</th>
-              <th></th></tr>
-        </table>
-      </td>
-    </tr>
   </table>
-
-  <table id="shotlog">
-  <tr> <!-- these are all the key variables to track and base logic off of-->
-    <td id="slide_number">1</td>
-    <td id="curshooter" hidden>1</td>
-    <td id="player1DisksShot" hidden>0</td>
-    <td id="player2DisksShot" hidden>0</td>
-    <td id="p1_20s" hidden>0</td>
-    <td id="p2_20s" hidden>0</td>
-    <td id="p1_pts" hidden>0</td>
-    <td id="p2_pts" hidden>0</td>
-    <td id="p1_gms" hidden>0</td>
-    <td id="p2_gms" hidden>0</td>
-    <td id="timelength" hidden>0</td>
-    <td id="shotattempt" hidden>x</td>
-    <td id="shotgrade" hidden>x</td>
-  </tr></table>
-
-  <p><button class="button" onclick="exporttable()">Download match log table</button></p>
-  <table id="Match Log">
-  <tr><th>Slide #</th><th>Shooter</th><th>P1 Shot#</th><th>P2 Shot#</th><th>P1 20s</th><th>P2 20s</th><th>P1 Pts</th><th>P2 Pts</th><th>P1 Gms</th><th>P2 Gms</th><th>Time Length</th><th>Shot Attempt</th><th>Shot Grade</th></tr>
-  </table>
-
   </body>
 
  <script src="scoreboard.js">
