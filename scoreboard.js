@@ -1,7 +1,6 @@
 ///////////////////////////////////////////////////////////All score related elements
 
 //Key variables defaults and corresponding html id
-var slidenumber = 1; //slide_number
 var curshooter = 1;  //curshooter & curshooter_disp
 var player1DisksShot = 0; //player1DisksShot
 var player2DisksShot = 0; //player2DisksShot
@@ -60,7 +59,6 @@ function setup()
                         Xptstowin);
     numdiscs = parseInt(prompt("Each round consists of X discs each. (max 13 for disc visuals)", numdiscs));
 
-    slidenumber = 1; //slide_number
     curshooter = 1;  //curshooter & curshooter_disp
     player1DisksShot = 0; //player1DisksShot
     player2DisksShot = 0; //player2DisksShot
@@ -74,7 +72,6 @@ function setup()
     document.getElementById("p1_20s_disp").innerHTML = player1Twenties;
     document.getElementById("p2_20s").innerHTML = player2Twenties;
     document.getElementById("p2_20s_disp").innerHTML = player2Twenties;
-    document.getElementById("slide_number").innerHTML = slidenumber;
     document.getElementById("curshooter").innerHTML = curshooter;
     document.getElementById("p1_gms_disp").innerHTML = player1Games;
     document.getElementById("p2_gms_disp").innerHTML = player2Games;
@@ -146,7 +143,6 @@ function page_update(x) {
     document.getElementById("p1_20s_disp").innerHTML = player1Twenties
     document.getElementById("p2_20s").innerHTML = player2Twenties
     document.getElementById("p2_20s_disp").innerHTML = player2Twenties
-    document.getElementById("slide_number").innerHTML = slidenumber
     document.getElementById("curshooter").innerHTML = curshooter
     document.getElementById("player1DisksShot").innerHTML = player1DisksShot
     document.getElementById("player2DisksShot").innerHTML = player2DisksShot
@@ -158,7 +154,6 @@ function page_update(x) {
     document.getElementById("p1_20s_disp").innerHTML = player1Twenties
     document.getElementById("p2_20s").innerHTML = player2Twenties
     document.getElementById("p2_20s_disp").innerHTML = player2Twenties
-    document.getElementById("slide_number").innerHTML = slidenumber
     document.getElementById("curshooter").innerHTML = curshooter //is this line needed?
     if (curshooter == 1) {document.getElementById("curshooter_disp").innerHTML = player1} //not sure why but these need to be backwards -> because used below
     if (curshooter == 2) {document.getElementById("curshooter_disp").innerHTML = player2}
@@ -170,7 +165,6 @@ function page_update(x) {
     document.getElementById("p2_pts_disp").innerHTML = player2Points}
 
   if (x==4){ //pts update and games update
-    document.getElementById("slide_number").innerHTML = slidenumber
     document.getElementById("p1_pts").innerHTML = player1Points
     document.getElementById("p1_pts_disp").innerHTML = player1Points
     document.getElementById("p2_pts").innerHTML = player2Points
@@ -205,7 +199,7 @@ function swaphammer()
 }
 
 
-//Updates slide_number, curshooter, p1/p2discshot, p1/p2_20s and calls ptsupdate() in case round is over
+//Updates curshooter, p1/p2discshot, p1/p2_20s and calls ptsupdate() in case round is over
   //x is shot result indicator (none, 20 or oppo 20), p is curshooter indicator (1 or 2)
   // - Working as intended (Apr 7, 2020)
 function shotupdate(actionCode) 
