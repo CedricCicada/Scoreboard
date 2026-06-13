@@ -485,6 +485,22 @@ function ptsupdate(actionCode)
     }
 
     //now resetting for next round and sending info to shotlog
+    resetgame();
+    // player1Twenties = 0;
+    // player2Twenties = 0;
+    // player1DisksShot = 0;
+    // player2DisksShot = 0;
+    // discupdate(0);
+    // slidenumber +=1 //if you put a semicolon here then it doesn't work for some reason
+    // //curshooter = (curshooter-2)*(-1)+1 //flipping curshooter so that hammer switches in following round
+    // swaphammer();
+    // page_update(3)
+    gmsupdate();
+  }
+}
+
+function resetgame()
+{
     player1Twenties = 0;
     player2Twenties = 0;
     player1DisksShot = 0;
@@ -493,9 +509,15 @@ function ptsupdate(actionCode)
     slidenumber +=1 //if you put a semicolon here then it doesn't work for some reason
     //curshooter = (curshooter-2)*(-1)+1 //flipping curshooter so that hammer switches in following round
     swaphammer();
-    page_update(3)
-    gmsupdate();
-  }
+    page_update(3);
+}
+
+function clearscores()
+{
+    resetgame();
+    player1Games = 0;
+    player2Games = 0;
+    page_update(4);
 }
 
 //when game is done, reset points (discs and 20s should already be reset), update page, prompt if match is over
