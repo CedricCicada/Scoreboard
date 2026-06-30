@@ -4,8 +4,7 @@
   border-radius: 50%;
   background-color: #transparent;
   margin: 0px;
- /* display: inline-block; not necessary due to float */
-  float: right; /* set to float: right if desired to have all discs appear in one row, none otherwise */
+  float: right; 
 }
 
 .disc1remain {
@@ -37,7 +36,7 @@
 
 .scoreboard {
   table-layout: fixed;
-  overflow: hidden; /* using so it's obvious when text needs to be resized */
+  overflow: hidden; 
   width: 834px;
   height: 240px;
   border-collapse: collapse;
@@ -63,7 +62,7 @@
 }
 
 #redcell {
-  background-color: #FF0000; /* red background */
+  background-color: #FF0000; 
   color: white;
   font-size: 55px;
 }
@@ -102,7 +101,6 @@
   font-size: 40px;
 }
 
-
 #col1 {
   width: 294px;
 }
@@ -119,7 +117,7 @@
   width: 115px;
 }
 
-.discrow { /* allows for stacking of discs */
+.discrow { 
   padding: 0px;
   display: inline-block;
   float: right;
@@ -141,4 +139,4 @@
 
 .yellow_bg {
   background-color: gold;
-}
+} 
