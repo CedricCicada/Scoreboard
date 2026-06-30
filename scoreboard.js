@@ -19,6 +19,22 @@ var prevSeconds = 0;
 var d1 = 0;
 var n1 = 0;
 
+var playersPerSide = 2;
+if (playersPerSide == 1)
+{
+  document.getElementById("team1").style.display = "none";
+  document.getElementById("team2").style.display = "none";
+  document.getElementById("player1").style.display = "block";
+  document.getElementById("player2").style.display = "block";  
+}
+else
+{
+  document.getElementById("team1").style.display = "block";
+  document.getElementById("team2").style.display = "block";
+  document.getElementById("player1").style.display = "none";
+  document.getElementById("player2").style.display = "none";  
+}
+
 //Calls setTime function and then iterates again every 0.1 seconds
 function startmatchtime() 
 {
