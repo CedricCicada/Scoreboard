@@ -19,7 +19,7 @@ var prevSeconds = 0;
 var d1 = 0;
 var n1 = 0;
 
-var playersPerSide = 2;
+var playersPerSide = 1;
 if (playersPerSide == 1)
 {
   document.getElementById("team1").style.display = "none";

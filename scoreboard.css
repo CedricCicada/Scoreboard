@@ -51,6 +51,10 @@
   border-collapse: collapse;
 }
 
+.noborder {
+  border-style: none;
+}
+
 .scoreboard th {
   padding: 0px;
   text-align:center;
@@ -68,7 +72,23 @@
   font-size: 55px;
 }
 
-#player1 {
+.player {
+  font-size: 36px;
+  padding: 0px;
+  font-weight: bold;
+  /* border-style: none;
+  border: 0px */
+}
+
+.team {
+  font-size: 30px;
+  padding: 0px;
+  font-weight: bold;
+  /* border-style: none;
+  border: 0px */
+}
+
+/* #player1 {
   font-size: 36px;
   padding: 0px;
     font-weight: bold;
@@ -80,7 +100,7 @@
   padding: 0px;
     font-weight: bold;
   color: #000000;
-}
+} */
 
 #row1 {
   line-height: 47px;
