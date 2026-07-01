@@ -88,7 +88,7 @@
   border: 0px */
 }
 
-/* #player1 {
+#player1 {
   font-size: 36px;
   padding: 0px;
     font-weight: bold;
@@ -100,7 +100,7 @@
   padding: 0px;
     font-weight: bold;
   color: #000000;
-} */
+} 
 
 #row1 {
   line-height: 47px;
