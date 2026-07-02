@@ -68,6 +68,7 @@ var player1Points = 0; //p1_pts & p1_pts_disp
 var player2Points = 0; //p2_pts & p2_pts_disp
 var player1Games = 0; //p1_gms & p1_gms_disp
 var player2Games = 0; //p2_gms & p2_gms_disp
+var playersPerSide = 1;
 
 // Variables for use in undoing shots
 var player1Prev20s = 0;
@@ -735,3 +736,24 @@ function setDoublesAlignment()
   document.getElementById("col2").style.width = "145px";
 }
 
+function showPlayers()
+{
+    if (playersPerSide == 1)
+    {
+        document.getElementById("player1").style.display = "block"
+        document.getElementById("player2").style.display = "block"
+        document.getElementById("player1a").style.display = "hidden"
+        document.getElementById("player1b").style.display = "hidden"
+        document.getElementById("player2a").style.display = "hidden"
+        document.getElementById("player2b").style.display = "hidden"
+    }
+    else
+    {
+        document.getElementById("player1").style.display = "hidden"
+        document.getElementById("player2").style.display = "hidden"
+        document.getElementById("player1a").style.display = "block"
+        document.getElementById("player1b").style.display = "block"
+        document.getElementById("player2a").style.display = "block"
+        document.getElementById("player2b").style.display = "block"
+    }
+}
