@@ -61,6 +61,14 @@
   font-weight: normal;
 }
 
+.team {
+  font-size: 30px;
+  padding: 0px;
+  font-weight: bold;
+  /* border-style: none;
+  border: 0px */
+}
+
 #redcell {
   background-color: #FF0000; /* red background */
   color: white;
