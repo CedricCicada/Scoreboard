@@ -48,6 +48,7 @@
 .scoreboard td {
   text-align:center;
   border: 3px solid #A6A6A6;
+  border-collapse: collapse;
 }
 
 .scoreboard th {
@@ -92,14 +93,6 @@
 #row1 {
   line-height: 47px;
   font-size: 30px;
-}
-
-#row2, #row3 {
-  line-height: 58px;
-}
-
-#row3 {
-  line-height: 58px;
 }
 
 #row4 {
