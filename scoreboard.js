@@ -728,12 +728,16 @@ function setSinglesAlignment()
 {
   document.getElementById("col1").style.width = "294px";
   document.getElementById("col2").style.width = "195px";
+  playersPerSide = 1;
+  showPlayers();
 }
 
 function setDoublesAlignment()
 {
   document.getElementById("col1").style.width = "344px";
   document.getElementById("col2").style.width = "145px";
+  playersPerSide = 2;
+  showPlayers();
 }
 
 function showPlayers()
@@ -742,15 +746,15 @@ function showPlayers()
     {
         document.getElementById("player1").style.display = "block"
         document.getElementById("player2").style.display = "block"
-        document.getElementById("player1a").style.display = "hidden"
-        document.getElementById("player1b").style.display = "hidden"
-        document.getElementById("player2a").style.display = "hidden"
-        document.getElementById("player2b").style.display = "hidden"
+        document.getElementById("player1a").style.display = "none"
+        document.getElementById("player1b").style.display = "none"
+        document.getElementById("player2a").style.display = "none"
+        document.getElementById("player2b").style.display = "none"
     }
     else
     {
-        document.getElementById("player1").style.display = "hidden"
-        document.getElementById("player2").style.display = "hidden"
+        document.getElementById("player1").style.display = "none"
+        document.getElementById("player2").style.display = "none"
         document.getElementById("player1a").style.display = "block"
         document.getElementById("player1b").style.display = "block"
         document.getElementById("player2a").style.display = "block"
