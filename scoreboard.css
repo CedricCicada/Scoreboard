@@ -62,12 +62,15 @@
   font-weight: normal;
 }
 
-.team {
-  font-size: 30px;
-  padding: 0px;
-  font-weight: bold;
-  /* border-style: none;
-  border: 0px */
+.player_table {
+  border: none;
+  border-collapse: collapse;
+}
+
+.player_table td {
+  text-align:center;  
+  border: none;
+  border-collapse: collapse;
 }
 
 #redcell {
@@ -76,7 +79,21 @@
   font-size: 55px;
 }
 
-#player1 {
+.singles_player {
+  font-size: 36px;
+  padding: 0px;
+  font-weight: bold;
+  border-style: none;
+}
+
+.doubles_player {
+  font-size: 30px;
+  padding: 0px;
+  font-weight: bold;
+  border-style: none;
+}
+
+/* #player1 {
   font-size: 36px;
   padding: 0px;
     font-weight: bold;
@@ -88,7 +105,7 @@
   padding: 0px;
     font-weight: bold;
   color: #000000;
-}
+} */
 
 #row1 {
   line-height: 47px;
@@ -139,4 +156,8 @@
 
 .yellow_bg {
   background-color: gold;
+}
+
+.hidden {
+  display:none;
 }

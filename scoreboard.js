@@ -744,20 +744,16 @@ function showPlayers()
 {
     if (playersPerSide == 1)
     {
-        document.getElementById("player1").style.display = "block"
-        document.getElementById("player2").style.display = "block"
-        document.getElementById("player1a").style.display = "none"
-        document.getElementById("player1b").style.display = "none"
-        document.getElementById("player2a").style.display = "none"
-        document.getElementById("player2b").style.display = "none"
+        document.getElementById("player1").classList.remove("hidden");
+        document.getElementById("player2").classList.remove("hidden");
+        document.getElementById("team1").classList.add("hidden");
+        document.getElementById("team2").classList.add("hidden");
     }
     else
     {
-        document.getElementById("player1").style.display = "none"
-        document.getElementById("player2").style.display = "none"
-        document.getElementById("player1a").style.display = "block"
-        document.getElementById("player1b").style.display = "block"
-        document.getElementById("player2a").style.display = "block"
-        document.getElementById("player2b").style.display = "block"
+        document.getElementById("player1").classList.add("hidden");
+        document.getElementById("player2").classList.add("hidden");
+        document.getElementById("team1").classList.remove("hidden");
+        document.getElementById("team2").classList.remove("hidden");
     }
 }
