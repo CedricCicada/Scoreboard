@@ -9,12 +9,45 @@
   <h1>Crokinole Match Scoreboard</h1>
   <h3>Keyboard shortcuts in parentheses</h3>
 
-  <p>
-  <button class="button" onclick="setup()">Match Setup</button>
-  <button class="button" onclick="disccolor()">Set colours</button>
-  <button class="button" onclick="fontsize()">Set font size</button>
-  <br/>
-  <button class="button" onclick="clearscores()">Clear scores</button>
+  <table id="player_setup">
+    <tr>
+      <td>
+        <p>Select game format</p>
+        <input type="radio" id="Singles" name="format" value="Singles" checked>
+        <label for="css">Singles</label><br>
+        <input type="radio" id="Doubles" name="format" value="Doubles">
+        <label for="css">Doubles</label><br>
+      </td>
+      <td id="single_player_names">
+        <p>Enter player names:</p>        
+        <label for="player1_name">Player 1:</label>
+        <input type="text" id="player1_name" name="player1_name">
+        <br>
+        <label for="player2_name">Player 2:</label>
+        <input type="text" id="player2_name" name="player2_name">
+      </td>
+      <td id=double_player_names">
+        <p>Enter player names:</p>        
+        <label for="player1_name">Player 1:</label>
+        <input type="text" id="player1_name" name="player1_name">
+        <br>
+        <label for="player2_name">Player 2:</label>
+        <input type="text" id="player2_name" name="player2_name">
+      </td>
+    </tr>
+  </table>
+
+
+  <p>    
+    <button class="button" onclick="setup()">Match Setup</button>
+    <button class="button" onclick="setSinglesAlignment()">Singles</button>
+    <button class="button" onclick="setDoublesAlignment()">Doubles</button>
+    <button class="button" onclick="disccolor()">Set colours</button>
+    <button class="button" onclick="fontsize()">Set font size</button>
+    <!--Should be automatic based on numberf of games -- one is left, >1 is right -->
+    <button class="button" onclick="changecolspan()">Change Centering of bottom row</button>
+    <br/>
+    <button class="button" onclick="clearscores()">Clear scores</button>
   </p>
 
   <table>
@@ -37,7 +70,7 @@
         </br>Match winning criteria: <a id="bestofXgames">Best of 3 Games</a> <a id="Xptstowin">(First to 5 Points)</a>
         </br>Enter shot attempt and shot grade before hitting 20 or non-20 event.<br/>
         <h2>Next Shot: <a id="curshooter_disp"></a></h2>
-          
+
         <table class="scoreboard">
           <colgroup><col id="col1">
                     <col id="col2">
