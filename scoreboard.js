@@ -101,7 +101,7 @@ function set_up_doubles_game()
 {
     var useTeamName = ""
 
-    while (useTeamName.toUpperCase() != "Y" && useTeamName.toUpperCase())
+    while (useTeamName.toUpperCase() != "Y" && useTeamName.toUpperCase() != "N")
     {
         useTeamName = prompt("Use team names? (y/n)");
         
