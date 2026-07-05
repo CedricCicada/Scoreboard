@@ -128,15 +128,17 @@ function set_up_players()
 {
     var playersPerSide= 0;
     playersPerSide = prompt("How many players on each side? (1 for singles, 2 for doubles", "1");
-    while (playersPerSide != 1 && playersPerSide && 2)
+    while (true)
     {
         if (playersPerSide == 1)
         {
             set_up_singles_game();
+            break;
         }
         else if (playersPerSide == 2)
         {
             set_up_doubles_game();
+            break;
         }
         else
         {
@@ -155,33 +157,38 @@ function set_up_singles_game()
     showPlayers(1);
 }
 
-function set_up_doubles_game()
-{
-    var useTeamName = ""
+function set_up_doubles_game() {
+    var useTeamName;
 
-    while (useTeamName.toUpperCase() != "Y" && useTeamName.toUpperCase() != "N")
-    {
+    while (true) {
         useTeamName = prompt("Use team names? (y/n)");
-        
-        if (useTeamName.toUpperCase() == "Y")
-        {
+
+        // Handle if user cancels the prompt
+        if (useTeamName === null) return; 
+
+        var input = useTeamName.toUpperCase();
+
+        if (input == "Y") {
             player1 = prompt("Enter team name #1", "Team 1");
             player2 = prompt("Enter team name #2", "Team 2");
             showPlayers(1);
-        }
-        else if (useTeamName.toUpperCase() == "N")
-        {
+            break; // Exit the loop
+        } 
+        else if (input == "N") {
             player1a = prompt("Enter first team's first player name", "Team 1 Player 1");
             player1b = prompt("Enter first team's second player name", "Team 1 Player 2");
             player2a = prompt("Enter second team's first player name", "Team 2 Player 1");
             player2b = prompt("Enter second team's second player name", "Team 2 Player 2");
             showPlayers(2);
-        }
-        else 
-        {
-            alert ("Please enter Y or N");
+            alert ("About to break out of the loop");
+            break; // Exit the loop
+        } 
+        else {
+            alert("Please enter Y or N");
         }
     }
+    alert ("Outside the loop");
+
     setDoublesAlignment();
     numdiscs = 12;
 }
