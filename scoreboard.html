@@ -11,12 +11,10 @@
 
   <p>
   <button class="button" onclick="setup()">Match Setup</button>
-  <button class="button" onclick="setSinglesAlignment()">Singles</button>
-  <button class="button" onclick="setDoublesAlignment()">Doubles</button>
   <button class="button" onclick="disccolor()">Set colours</button>
   <button class="button" onclick="fontsize()">Set font size</button>
-  <!--Should be automatic based on numberf of games -- one is left, >1 is right -->
-  <button class="button" onclick="changecolspan()">Change Centering of bottom row</button>
+  <br/>
+  <button class="button" onclick="clearscores()">Clear scores</button>
   </p>
 
   <table>
@@ -49,31 +47,57 @@
               <th>20s</th><th>Points</th><th>Games</th></tr>
 
           <tr id="row2">
-            <td id="player1">Beierling</td>
-              <td style="border-style: solid solid solid hidden!important;"><div class="discrow"><div id="p1disc13"></div></div>
-                <div class="discrow"><div id="p1disc12"></div><div id="p1disc11"></div></div>
-                <div class="discrow"><div id="p1disc10"></div><div id="p1disc9"></div></div>
-                <div class="discrow"><div id="p1disc8"></div><div id="p1disc7"></div></div>
-                <div class="discrow"><div id="p1disc6"></div><div id="p1disc5"></div></div>
-                <div class="discrow"><div id="p1disc4"></div><div id="p1disc3"></div></div>
-                <div class="discrow"><div id="p1disc2"></div><div id="p1disc1"></div></div></td>
-              <td id="redcell"><a id="p1_20s_disp">0</a></td>
-              <td id="redcell"><a id="p1_pts_disp">0</a></td>
-              <td id="redcell"><a id="p1_gms_disp">0</a></td>
+            <!-- Either player1 or team1 will be hidden at all times -->
+            <td id="player1" class="singles_player">Beierling</td>
+            <td id="team1" class="hidden">
+              <table width="100%" class="player_table">
+                <tr>
+                  <td id="player1a" class="doubles_player">Ray Beierling</td>
+                </tr>
+                <tr>
+                  <td id="player1b" class="doubles_player">Jason Beierling</td>
+                </tr>
+              </table>
+            </td>
+            <td style="border-style: solid solid solid hidden!important;">
+              <div class="discrow"><div id="p1disc13"></div></div>
+              <div class="discrow"><div id="p1disc12"></div><div id="p1disc11"></div></div>
+              <div class="discrow"><div id="p1disc10"></div><div id="p1disc9"></div></div>
+              <div class="discrow"><div id="p1disc8"></div><div id="p1disc7"></div></div>
+              <div class="discrow"><div id="p1disc6"></div><div id="p1disc5"></div></div>
+              <div class="discrow"><div id="p1disc4"></div><div id="p1disc3"></div></div>
+              <div class="discrow"><div id="p1disc2"></div><div id="p1disc1"></div></div>
+            </td>
+            <td id="redcell"><a id="p1_20s_disp">0</a></td>
+            <td id="redcell"><a id="p1_pts_disp">0</a></td>
+            <td id="redcell"><a id="p1_gms_disp">0</a></td>
           </tr>
 
           <tr id="row3">
-            <td id="player2">Slater</td>
-            <td style="border-style: solid solid solid hidden!important;"><div class="discrow"><div id="p2disc13"></div></div>
-                <div class="discrow"><div id="p2disc12"></div><div id="p2disc11"></div></div>
-                <div class="discrow"><div id="p2disc10"></div><div id="p2disc9"></div></div>
-                <div class="discrow"><div id="p2disc8"></div><div id="p2disc7"></div></div>
-                <div class="discrow"><div id="p2disc6"></div><div id="p2disc5"></div></div>
-                <div class="discrow"><div id="p2disc4"></div><div id="p2disc3"></div></div>
-                <div class="discrow"><div id="p2disc2"></div><div id="p2disc1"></div></div></td>
-              <td id="redcell"><a id="p2_20s_disp">0</a></td>
-              <td id="redcell"><a id="p2_pts_disp">0</a></td>
-              <td id="redcell"><a id="p2_gms_disp">0</a></td>
+            <!-- Either player2 or team2 will be hidden at all times -->
+            <td id="player2" class="singles_player">Slater</td>
+            <td id="team2" class="hidden">
+              <table width="100%" class="player_table">
+                <tr>
+                  <td id="player2a" class="doubles_player">Justin Slater</td>
+                </tr>
+                <tr>
+                  <td id="player2b" class="doubles_player"">Fred Slater</td>
+                </tr>
+              </table>
+            </td>
+            <td style="border-style: solid solid solid hidden!important;">
+              <div class="discrow"><div id="p2disc13"></div></div>
+              <div class="discrow"><div id="p2disc12"></div><div id="p2disc11"></div></div>
+              <div class="discrow"><div id="p2disc10"></div><div id="p2disc9"></div></div>
+              <div class="discrow"><div id="p2disc8"></div><div id="p2disc7"></div></div>
+              <div class="discrow"><div id="p2disc6"></div><div id="p2disc5"></div></div>
+              <div class="discrow"><div id="p2disc4"></div><div id="p2disc3"></div></div>
+              <div class="discrow"><div id="p2disc2"></div><div id="p2disc1"></div></div>
+            </td>
+            <td id="redcell"><a id="p2_20s_disp">0</a></td>
+            <td id="redcell"><a id="p2_pts_disp">0</a></td>
+            <td id="redcell"><a id="p2_gms_disp">0</a></td>
           </tr>
 
           <tr id="row4"><th colspan="5" id="eventid">Tournament</th><th></th></tr>

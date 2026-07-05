@@ -10,6 +10,7 @@ var player1Points = 0; //p1_pts & p1_pts_disp
 var player2Points = 0; //p2_pts & p2_pts_disp
 var player1Games = 0; //p1_gms & p1_gms_disp
 var player2Games = 0; //p2_gms & p2_gms_disp
+var playersPerSide = 1;
 
 // Variables for use in undoing shots
 var player1Prev20s = 0;
@@ -28,10 +29,14 @@ var roundnumber = 1; //round_number
 var gamenumber = 1; //game_number
 var numdiscs = 8; //internal javascript only - unless disc display references
 var bestofXgames = 1; //bestofXgames
-var Xptstowin = 5; //Xptstowin
-var Xgmstowin = 0;  //internal
+var points_per_game = 5; //points_per_game
+var games_to_win_match = 0;  //internal
 var player1 = "P1"; //player1
 var player2 = "P2"; //player2
+var player1a = "Team 1 player 1"
+var player1b = "Team 1 player 2"
+var player2a = "Team 2 player 1"
+var player2b = "Team 2 player 2"
 var eventID = "Event ID"; //eventID
 var matchDetail = "Tournament stage"; //matchDetail
 var p1hamind = "1st Shot"; //p1hammerind
@@ -41,22 +46,108 @@ var shortcutsCreated = false;
 //Setup game info to enter match data like player names, match name, and the criteria to win the match
   //calls resetround() and startmatchtime() - RE-evaluate the use of this
   //adds event listener so that keyboard shortcuts can be used
+  //-(Apr 7, 2020) Working decently, stuff to improve like remove redundancies and ensuring all keycodes work
 
-function setup() 
+function set_up_descriptions()
 {
-    player1 = prompt("Enter player/team name #1", "Player 1");
-    player1 = player1.toUpperCase();
-    player2 = prompt("Enter player/team name #2", "Player 2");
-    player2 = player2.toUpperCase();
-    eventID = prompt("Enter Event ID", eventID);
+    eventID = prompt("Enter tournament name or other event ID for bottom of scoreboard", eventID);
     eventID = eventID.toUpperCase();
     matchDetail = prompt("Enter match detail to show at top of scoreboard, ie Semifinal - First to 11", 
                           matchDetail);
+
+}
+
+function set_up_goal()
+{
     bestofXgames = prompt("Match is best of X Games (ex. If in Tavistock, X=3 as the match is a best of 3 games. Whereas a race to 11 points is best of 1 game)",
                           bestofXgames);	
-    Xgmstowin = Math.ceil(bestofXgames/2)
-    Xptstowin = prompt("Each game requires X points to win (ex. If in Tavistock, X=5, whereas a race to 9 points has X=9)", 
-                        Xptstowin);
+    games_to_win_match = Math.ceil(bestofXgames/2)
+    points_per_game = prompt("Each game requires X points to win (ex. If in Tavistock, X=5, whereas a race to 9 points has X=9)", 
+                        points_per_game);
+}
+
+function set_up_players()
+{
+    var playersPerSide= 0;
+    playersPerSide = prompt("How many players on each side? (1 for singles, 2 for doubles", "1");
+    while (playersPerSide != 1 && playersPerSide && 2)
+    {
+        if (playersPerSide == 1)
+        {
+            set_up_singles_game();
+        }
+        else if (playersPerSide == 2)
+        {
+            set_up_doubles_game();
+        }
+        else
+        {
+            alert ("Please enter 1 or 2");
+        }
+    }
+}
+
+function set_up_singles_game()
+{
+    player1 = prompt("Enter player name #1", "Player 1");
+    player2 = prompt("Enter player name #2", "Player 2");
+
+    setSinglesAlignment();
+    numdiscs = 8;
+    showPlayers(1);
+}
+
+function set_up_doubles_game()
+{
+    var useTeamName = ""
+
+    while (useTeamName.toUpperCase() != "Y" && useTeamName.toUpperCase())
+    {
+        useTeamName = prompt("Use team names? (y/n)");
+        
+        if (useTeamName.toUpperCase() == "Y")
+        {
+            player1 = prompt("Enter team name #1", "Team 1");
+            player2 = prompt("Enter team name #2", "Team 2");
+            showPlayers(1);
+        }
+        else if (useTeamName.toUpperCase() == "N")
+        {
+            player1a = prompt("Enter first team's first player name", "Team 1 Player 1");
+            player1b = prompt("Enter first team's second player name", "Team 1 Player 2");
+            player2a = prompt("Enter second team's first player name", "Team 2 Player 1");
+            player2b = prompt("Enter second team's second player name", "Team 2 Player 2");
+            showPlayers(2);
+        }
+        else 
+        {
+            alert ("Please enter Y or N");
+        }
+    }
+    setDoublesAlignment();
+    numdiscs = 12;
+}
+
+function setup() 
+{
+    set_up_descriptions();
+    set_up_goal();
+    set_up_players();
+
+    // player1 = prompt("Enter player/team name #1", "Player 1");
+    // player1 = player1.toUpperCase();
+    // player2 = prompt("Enter player/team name #2", "Player 2");
+    // player2 = player2.toUpperCase();
+
+    // eventID = prompt("Enter Event ID", eventID);
+    // eventID = eventID.toUpperCase();
+    // matchDetail = prompt("Enter match detail to show at top of scoreboard, ie Semifinal - First to 11", 
+    //                       matchDetail);
+    // bestofXgames = prompt("Match is best of X Games (ex. If in Tavistock, X=3 as the match is a best of 3 games. Whereas a race to 11 points is best of 1 game)",
+    //                       bestofXgames);	
+    // games_to_win_match = Math.ceil(bestofXgames/2)
+    // points_per_game = prompt("Each game requires X points to win (ex. If in Tavistock, X=5, whereas a race to 9 points has X=9)", 
+    //                     points_per_game);
     numdiscs = parseInt(prompt("Each round consists of X discs each. (max 13 for disc visuals)", numdiscs));
 
     curshooter = 1;  //curshooter & curshooter_disp
@@ -124,19 +215,28 @@ function setup()
 //updates html for latest javascript values
   //x is used as indicator for type of update so not all elements are called on to update if unnecessary
   //working as intended (Apr 7, 2020)
-function page_update(x) {
-  if (x==0){ //setup call
-    document.getElementById("player1").innerHTML = player1;
-    document.getElementById("player2").innerHTML = player2;
-    document.getElementById("eventid").innerHTML = eventID;
-    document.getElementById("matchDetail").innerHTML = matchDetail;
-    document.getElementById("bestofXgames").innerHTML = "Best of " + bestofXgames + " Games";
-    document.getElementById("Xptstowin").innerHTML = "(First to " + Xptstowin + " Points)" };
+function page_update(x) 
+{
+    if (x == 0)
+    { //setup call
+        document.getElementById("player1").innerHTML = player1;
+        document.getElementById("player2").innerHTML = player2;
+        document.getElementById("player1a").innerHTML = player1a;
+        document.getElementById("player1b").innerHTML = player1b;
+        document.getElementById("player2a").innerHTML = player2a;
+        document.getElementById("player2b").innerHTML = player2b;
+        document.getElementById("eventid").innerHTML = eventID;
+        document.getElementById("matchDetail").innerHTML = matchDetail;
+        document.getElementById("bestofXgames").innerHTML = "Best of " + bestofXgames + " Games";
+        document.getElementById("Xptstowin").innerHTML = "(First to " + points_per_game + " Points)"; 
+    }
 
-  if (x==1){ //swaphammer call
-    document.getElementById("curshooter").innerHTML = curshooter
-    document.getElementById("p2hammerind").innerHTML = p2hamind
-    document.getElementById("p1hammerind").innerHTML = p1hamind}
+    if (x == 1)
+    { //swaphammer call
+        document.getElementById("curshooter").innerHTML = curshooter
+        document.getElementById("p2hammerind").innerHTML = p2hamind
+        document.getElementById("p1hammerind").innerHTML = p1hamind
+    }
 
   if (x==2){ //shot update call
     document.getElementById("p1_20s").innerHTML = player1Twenties
@@ -337,6 +437,22 @@ function ptsupdate(actionCode)
     }
 
     //now resetting for next round and sending info to shotlog
+    resetgame();
+    // player1Twenties = 0;
+    // player2Twenties = 0;
+    // player1DisksShot = 0;
+    // player2DisksShot = 0;
+    // discupdate(0);
+    // slidenumber +=1 //if you put a semicolon here then it doesn't work for some reason
+    // //curshooter = (curshooter-2)*(-1)+1 //flipping curshooter so that hammer switches in following round
+    // swaphammer();
+    // page_update(3)
+    gmsupdate();
+  }
+}
+
+function resetgame()
+{
     player1Twenties = 0;
     player2Twenties = 0;
     player1DisksShot = 0;
@@ -344,15 +460,23 @@ function ptsupdate(actionCode)
     discupdate(0);
     slidenumber +=1 //if you put a semicolon here then it doesn't work for some reason
     swaphammer();
-    page_update(3)
-    gmsupdate();
-  }
+    page_update(3);
+}
+
+function clearscores()
+{
+    player1Games = 0;
+    player2Games = 0;
+    player1Points = 0;
+    player2Points = 0;
+    resetgame();
+    page_update(2);
 }
 
 //when game is done, reset points (discs and 20s should already be reset), update page, prompt if match is over
    //- Working as intended (Apr 7, 2020)
 function gmsupdate() {
-  if (!(player1Points == player2Points) && ((player1Points >= Xptstowin) || (player2Points >= Xptstowin))){
+  if (!(player1Points == player2Points) && ((player1Points >= points_per_game) || (player2Points >= points_per_game))){
       if (player1Points > player2Points){player1Games += 1}
       if (player2Points > player1Points){player2Games += 1}
     player1Points = 0
@@ -360,9 +484,9 @@ function gmsupdate() {
     slidenumber += 1
     page_update(4);
   }
-  if (player1Games >= Xgmstowin) {//window.alert("Match complete: winner is " + player1); //call shotlog to enter final row with games updated
+  if (player1Games >= games_to_win_match) {//window.alert("Match complete: winner is " + player1); //call shotlog to enter final row with games updated
                           shotlog();}
-  if (player2Games >= Xgmstowin) {//window.alert("Match complete: winner is " + player2)
+  if (player2Games >= games_to_win_match) {//window.alert("Match complete: winner is " + player2)
                           shotlog();} //call shotlog to enter final row with games updated
 }
 
@@ -414,13 +538,10 @@ function showDisc(playerNumber, shotNumber)
 var p1disccolor = "red";
 var p2disccolor = "black";
 
-
 //asks for user prompt and inputs as the disc colour
 function disccolor() {
   p1disccolor = prompt("Enter player/team #1 disc color. Tested colours include: black, red, blue, purple, green, grey, orange, hotpink, goldenrod (natural)", "red");
-  document.getElementById("player1").style.color = p1disccolor;
   p2disccolor = prompt("Enter player/team #2 disc color. Tested colours include: black, red, blue, purple, green, grey, orange, hotpink, goldenrod (natural)", "black");
-  document.getElementById("player2").style.color = p2disccolor;
   discupdate(0);
 }
 
@@ -462,7 +583,24 @@ function setSinglesAlignment()
 
 function setDoublesAlignment()
 {
-  document.getElementById("col1").style.width = "344px";
-  document.getElementById("col2").style.width = "145px";
+    document.getElementById("col1").style.width = "344px";
+    document.getElementById("col2").style.width = "145px";
 }
 
+function showPlayers(players_per_side)
+{
+    if (players_per_side == 1)
+    {
+        document.getElementById("player1").classList.remove("hidden");
+        document.getElementById("player2").classList.remove("hidden");
+        document.getElementById("team1").classList.add("hidden");
+        document.getElementById("team2").classList.add("hidden");
+    }
+    else
+    {
+        document.getElementById("player1").classList.add("hidden");
+        document.getElementById("player2").classList.add("hidden");
+        document.getElementById("team1").classList.remove("hidden");
+        document.getElementById("team2").classList.remove("hidden");
+    }
+}

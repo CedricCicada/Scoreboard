@@ -48,6 +48,7 @@
 .scoreboard td {
   text-align:center;
   border: 3px solid #A6A6A6;
+  border-collapse: collapse;
 }
 
 .scoreboard th {
@@ -61,13 +62,38 @@
   font-weight: normal;
 }
 
+.player_table {
+  border: none;
+  border-collapse: collapse;
+}
+
+.player_table td {
+  text-align:center;  
+  border: none;
+  border-collapse: collapse;
+}
+
 #redcell {
   background-color: #FF0000; /* red background */
   color: white;
   font-size: 55px;
 }
 
-#player1 {
+.singles_player {
+  font-size: 36px;
+  padding: 0px;
+  font-weight: bold;
+  border-style: none;
+}
+
+.doubles_player {
+  font-size: 30px;
+  padding: 0px;
+  font-weight: bold;
+  border-style: none;
+}
+
+/* #player1 {
   font-size: 36px;
   padding: 0px;
     font-weight: bold;
@@ -79,19 +105,11 @@
   padding: 0px;
     font-weight: bold;
   color: #000000;
-}
+} */
 
 #row1 {
   line-height: 47px;
   font-size: 30px;
-}
-
-#row2, #row3 {
-  line-height: 58px;
-}
-
-#row3 {
-  line-height: 58px;
 }
 
 #row4 {
@@ -138,4 +156,8 @@
 
 .yellow_bg {
   background-color: gold;
+}
+
+.hidden {
+  display:none;
 }
