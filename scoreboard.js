@@ -28,6 +28,7 @@ var player2PrevGames = 0;
 var roundnumber = 1; //round_number
 var gamenumber = 1; //game_number
 var numdiscs = 8; //internal javascript only - unless disc display references
+var maxdiscs = 12;
 var bestofXgames = 1; //bestofXgames
 var points_per_game = 5; //points_per_game
 var games_to_win_match = 0;  //internal
