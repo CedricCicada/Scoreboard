@@ -86,6 +86,7 @@ var player2PrevGames = 0;
 var roundnumber = 1; //round_number
 var gamenumber = 1; //game_number
 var numdiscs = 8; //internal javascript only - unless disc display references
+var maxdiscs = 12;  // clear unused disks if switching from doubles to singles
 var bestofXgames = 1; //bestofXgames
 var points_per_game = 5; //points_per_game
 var games_to_win_match = 0;  //internal
@@ -673,16 +674,29 @@ function discupdate(x)
   if (x == 0) 
   {
     var i;
-    for (i=1; i <= numdiscs; i++) 
+    // for (i=1; i <= numdiscs; i++) 
+    for (i=1; i <= maxdiscs; i++) 
     {
       var Xdisc = "p1disc" + i;
       var Ydisc = "p2disc" + i;
-      document.getElementById(Xdisc).setAttribute("class", "disc1remain");
-      document.getElementById(Xdisc).style.backgroundColor = p1disccolor;
-      document.getElementById(Ydisc).setAttribute("class", "disc2remain");
-      document.getElementById(Ydisc).style.backgroundColor = p2disccolor;
+      // If the disk number is less than the number of disks in play, display the disc.  If not, hide it.
+      if (i <= numdiscs)
+      {
+        document.getElementById(Xdisc).setAttribute("class", "disc1remain");
+        document.getElementById(Xdisc).style.backgroundColor = p1disccolor;
+        document.getElementById(Ydisc).setAttribute("class", "disc2remain");
+        document.getElementById(Ydisc).style.backgroundColor = p2disccolor;
+      }
+      else
+      {
+        document.getElementById(Xdisc).setAttribute("class", "disc1shot");
+        document.getElementById(Xdisc).style.backgroundColor = "transparent";
+        document.getElementById(Xdisc).setAttribute("class", "disc2shot");
+        document.getElementById(Xdisc).style.backgroundColor = "transparent";
+      }
     }
   }
+
   //remove discs as shot
   if (x == 1) {
     var Xdisc = "p1disc" + player1DisksShot;
