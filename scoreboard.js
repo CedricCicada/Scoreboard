@@ -71,15 +71,17 @@ function set_up_players()
 {
     var playersPerSide= 0;
     playersPerSide = prompt("How many players on each side? (1 for singles, 2 for doubles", "1");
-    while (playersPerSide != 1 && playersPerSide && 2)
+    while (true)
     {
         if (playersPerSide == 1)
         {
             set_up_singles_game();
+            break;
         }
         else if (playersPerSide == 2)
         {
             set_up_doubles_game();
+            break;
         }
         else
         {
@@ -95,6 +97,9 @@ function set_up_singles_game()
 
     setSinglesAlignment();
     numdiscs = 8;
+    alert ("About to split disk rows");
+    splitDiskRow(false);
+    alert ("Disk rows should be split.");
     showPlayers(1);
 }
 
@@ -102,7 +107,7 @@ function set_up_doubles_game()
 {
     var useTeamName = ""
 
-    while (useTeamName.toUpperCase() != "Y" && useTeamName.toUpperCase() != "N")
+    while (true)
     {
         useTeamName = prompt("Use team names? (y/n)");
         
@@ -111,6 +116,7 @@ function set_up_doubles_game()
             player1 = prompt("Enter team name #1", "Team 1");
             player2 = prompt("Enter team name #2", "Team 2");
             showPlayers(1);
+            break;
         }
         else if (useTeamName.toUpperCase() == "N")
         {
@@ -119,6 +125,7 @@ function set_up_doubles_game()
             player2a = prompt("Enter second team's first player name", "Team 2 Player 1");
             player2b = prompt("Enter second team's second player name", "Team 2 Player 2");
             showPlayers(2);
+            break;
         }
         else 
         {
@@ -127,6 +134,7 @@ function set_up_doubles_game()
     }
     setDoublesAlignment();
     numdiscs = 12;
+    splitDiskRow(true);
 }
 
 function setup() 
@@ -149,7 +157,7 @@ function setup()
     // games_to_win_match = Math.ceil(bestofXgames/2)
     // points_per_game = prompt("Each game requires X points to win (ex. If in Tavistock, X=5, whereas a race to 9 points has X=9)", 
     //                     points_per_game);
-    numdiscs = parseInt(prompt("Each round consists of X discs each. (max 13 for disc visuals)", numdiscs));
+    numdiscs = parseInt(prompt("Each round consists of X discs each. (max 12 for disc visuals)", numdiscs));
 
     curshooter = 1;  //curshooter & curshooter_disp
     player1DisksShot = 0; //player1DisksShot
@@ -160,15 +168,10 @@ function setup()
     player2Points = 0; //p2_pts & p2_pts_disp
     player1Games = 0; //p1_gms & p1_gms_disp
     player2Games = 0; //p2_gms & p2_gms_disp
-    document.getElementById("p1_20s").innerHTML = player1Twenties;
     document.getElementById("p1_20s_disp").innerHTML = player1Twenties;
-    document.getElementById("p2_20s").innerHTML = player2Twenties;
     document.getElementById("p2_20s_disp").innerHTML = player2Twenties;
-    document.getElementById("curshooter").innerHTML = curshooter;
     document.getElementById("p1_gms_disp").innerHTML = player1Games;
     document.getElementById("p2_gms_disp").innerHTML = player2Games;
-    document.getElementById("player1DisksShot").innerHTML = player1DisksShot ; 
-    document.getElementById("player2DisksShot").innerHTML = player2DisksShot;
 
     page_update(0);
     discupdate(0);
@@ -439,15 +442,6 @@ function ptsupdate(actionCode)
 
     //now resetting for next round and sending info to shotlog
     resetgame();
-    // player1Twenties = 0;
-    // player2Twenties = 0;
-    // player1DisksShot = 0;
-    // player2DisksShot = 0;
-    // discupdate(0);
-    // slidenumber +=1 //if you put a semicolon here then it doesn't work for some reason
-    // //curshooter = (curshooter-2)*(-1)+1 //flipping curshooter so that hammer switches in following round
-    // swaphammer();
-    // page_update(3)
     gmsupdate();
   }
 }
@@ -495,29 +489,59 @@ function gmsupdate() {
   //x=0 means reset round and restore all discs, x=1 means p1 shot, x=2 means p2 shot
 function discupdate(x) 
 {
-  //and add discs back
-  if (x == 0) 
-  {
-    var i;
-    for (i=1; i <= numdiscs; i++) 
+    //and add discs back
+    if (x == 0) 
     {
-      var Xdisc = "p1disc" + i;
-      var Ydisc = "p2disc" + i;
-      document.getElementById(Xdisc).setAttribute("class", "disc1remain");
-      document.getElementById(Xdisc).style.backgroundColor = p1disccolor;
-      document.getElementById(Ydisc).setAttribute("class", "disc2remain");
-      document.getElementById(Ydisc).style.backgroundColor = p2disccolor;
+        showInitialDisks();
     }
-  }
-  //remove discs as shot
-  if (x == 1) {
-    var Xdisc = "p1disc" + player1DisksShot;
-    document.getElementById(Xdisc).setAttribute("class", "disc1shot")
-    document.getElementById(Xdisc).style.backgroundColor = "transparent";}
-  if (x == 2) {
-    var Xdisc = "p2disc" + player2DisksShot;
-    document.getElementById(Xdisc).setAttribute("class", "disc2shot")
-    document.getElementById(Xdisc).style.backgroundColor = "transparent";}
+    //remove discs as shot
+    if (x == 1) {
+        var Xdisc = "p1disc" + player1DisksShot;
+        document.getElementById(Xdisc).setAttribute("class", "disc1shot")
+        document.getElementById(Xdisc).style.backgroundColor = "transparent";}
+    if (x == 2) {
+        var Xdisc = "p2disc" + player2DisksShot;
+        document.getElementById(Xdisc).setAttribute("class", "disc2shot")
+        document.getElementById(Xdisc).style.backgroundColor = "transparent";}
+}
+
+function showInitialDisks()
+{
+    for (i = 1; i <= maxdiscs; i++)
+    {
+        var Xdisc = "p1disc" + i;
+        var Ydisc = "p2disc" + i;
+        if (i <= numdiscs)
+        {
+            // Show all of the disks we will use. 
+            document.getElementById(Xdisc).classList.remove("hidden");
+            document.getElementById(Ydisc).classList.remove("hidden");
+        }
+        else
+        {
+            // Hide the disks we won't use
+            document.getElementById(Xdisc).classList.add("hidden");
+            document.getElementById(Ydisc).classList.add("hidden");
+        }
+    }
+}
+
+function splitDiskRow(doSplit)
+{
+    if (doSplit)
+    {
+        // Show the <br> element that separates the disk rows
+        document.getElementById("p1_disk_separater").classList.remove("hidden");
+        document.getElementById("p2_disk_separater").classList.remove("hidden");
+    }
+    else
+    {
+        // Hide the <br> element that separates the disk rows
+        document.getElementById("p1_disk_separater").classList.add("hidden");
+        document.getElementById("p2_disk_separater").classList.add("hidden");
+
+        // separatorElement.classList.add("hidden");
+    }
 }
 
 function showDisc(playerNumber, shotNumber)
@@ -578,14 +602,14 @@ function changecolspan() {
 // enough for six, sp twelve disks are shown in two rows.
 function setSinglesAlignment()
 {
-  document.getElementById("col1").style.width = "294px";
-  document.getElementById("col2").style.width = "195px";
+  // document.getElementById("col1").style.width = "294px";
+  // document.getElementById("col2").style.width = "195px";
 }
 
 function setDoublesAlignment()
 {
-    document.getElementById("col1").style.width = "344px";
-    document.getElementById("col2").style.width = "145px";
+    // document.getElementById("col1").style.width = "344px";
+    // document.getElementById("col2").style.width = "145px";
 }
 
 function showPlayers(players_per_side)
