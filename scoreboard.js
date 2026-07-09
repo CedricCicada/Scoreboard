@@ -97,9 +97,7 @@ function set_up_singles_game()
 
     setSinglesAlignment();
     numdiscs = 8;
-    alert ("About to split disk rows");
     splitDiskRow(false);
-    alert ("Disk rows should be split.");
     showPlayers(1);
 }
 
@@ -237,45 +235,28 @@ function page_update(x)
 
     if (x == 1)
     { //swaphammer call
-        document.getElementById("curshooter").innerHTML = curshooter
-        document.getElementById("p2hammerind").innerHTML = p2hamind
-        document.getElementById("p1hammerind").innerHTML = p1hamind
+        // document.getElementById("p2hammerind").innerHTML = p2hamind
+        // document.getElementById("p1hammerind").innerHTML = p1hamind
     }
 
   if (x==2){ //shot update call
-    document.getElementById("p1_20s").innerHTML = player1Twenties
     document.getElementById("p1_20s_disp").innerHTML = player1Twenties
-    document.getElementById("p2_20s").innerHTML = player2Twenties
     document.getElementById("p2_20s_disp").innerHTML = player2Twenties
-    document.getElementById("curshooter").innerHTML = curshooter
-    document.getElementById("player1DisksShot").innerHTML = player1DisksShot
-    document.getElementById("player2DisksShot").innerHTML = player2DisksShot
     swapShooter();
   }
 
   if (x==3){ //pts update, shots and 20s should be 0s
-    document.getElementById("p1_20s").innerHTML = player1Twenties
     document.getElementById("p1_20s_disp").innerHTML = player1Twenties
-    document.getElementById("p2_20s").innerHTML = player2Twenties
     document.getElementById("p2_20s_disp").innerHTML = player2Twenties
-    document.getElementById("curshooter").innerHTML = curshooter //is this line needed?
     if (curshooter == 1) {document.getElementById("curshooter_disp").innerHTML = player1} //not sure why but these need to be backwards -> because used below
     if (curshooter == 2) {document.getElementById("curshooter_disp").innerHTML = player2}
-    document.getElementById("player1DisksShot").innerHTML = player1DisksShot
-    document.getElementById("player2DisksShot").innerHTML = player2DisksShot
-    document.getElementById("p1_pts").innerHTML = player1Points
     document.getElementById("p1_pts_disp").innerHTML = player1Points
-    document.getElementById("p2_pts").innerHTML = player2Points
     document.getElementById("p2_pts_disp").innerHTML = player2Points}
 
   if (x==4){ //pts update and games update
-    document.getElementById("p1_pts").innerHTML = player1Points
     document.getElementById("p1_pts_disp").innerHTML = player1Points
-    document.getElementById("p2_pts").innerHTML = player2Points
     document.getElementById("p2_pts_disp").innerHTML = player2Points
-    document.getElementById("p1_gms").innerHTML = player1Games
     document.getElementById("p1_gms_disp").innerHTML = player1Games
-    document.getElementById("p2_gms").innerHTML = player2Games
     document.getElementById("p2_gms_disp").innerHTML = player2Games}
 
 }
@@ -344,7 +325,6 @@ function shotupdate(actionCode)
     discupdate(2);
   }
 
-  slidenumber += 1;
   page_update(2);
 
   if ((player1DisksShot >= numdiscs) && (player2DisksShot >= numdiscs)) 
@@ -390,7 +370,6 @@ function undoShot()
   player2Twenties = player2Prev20s;
   player1DisksShot = player1PrevDisksShot;
   player2DisksShot = player2PrevDisksShot;
-  slidenumber -= 1;
   page_update(2);
   showDisc(curshooter, curshooter == 1 ? player1DiskNumber : player2DiskNumber);
 }
@@ -440,7 +419,6 @@ function ptsupdate(actionCode)
       player2Points += 2;
     }
 
-    //now resetting for next round and sending info to shotlog
     resetgame();
     gmsupdate();
   }
@@ -453,7 +431,6 @@ function resetgame()
     player1DisksShot = 0;
     player2DisksShot = 0;
     discupdate(0);
-    slidenumber +=1 //if you put a semicolon here then it doesn't work for some reason
     swaphammer();
     page_update(3);
 }
@@ -476,13 +453,8 @@ function gmsupdate() {
       if (player2Points > player1Points){player2Games += 1}
     player1Points = 0
     player2Points = 0
-    slidenumber += 1
     page_update(4);
   }
-  if (player1Games >= games_to_win_match) {//window.alert("Match complete: winner is " + player1); //call shotlog to enter final row with games updated
-                          shotlog();}
-  if (player2Games >= games_to_win_match) {//window.alert("Match complete: winner is " + player2)
-                          shotlog();} //call shotlog to enter final row with games updated
 }
 
 //disc visuals
