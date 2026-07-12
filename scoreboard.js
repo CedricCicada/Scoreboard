@@ -141,20 +141,6 @@ function setup()
     set_up_goal();
     set_up_players();
 
-    // player1 = prompt("Enter player/team name #1", "Player 1");
-    // player1 = player1.toUpperCase();
-    // player2 = prompt("Enter player/team name #2", "Player 2");
-    // player2 = player2.toUpperCase();
-
-    // eventID = prompt("Enter Event ID", eventID);
-    // eventID = eventID.toUpperCase();
-    // matchDetail = prompt("Enter match detail to show at top of scoreboard, ie Semifinal - First to 11", 
-    //                       matchDetail);
-    // bestofXgames = prompt("Match is best of X Games (ex. If in Tavistock, X=3 as the match is a best of 3 games. Whereas a race to 11 points is best of 1 game)",
-    //                       bestofXgames);	
-    // games_to_win_match = Math.ceil(bestofXgames/2)
-    // points_per_game = prompt("Each game requires X points to win (ex. If in Tavistock, X=5, whereas a race to 9 points has X=9)", 
-    //                     points_per_game);
     numdiscs = parseInt(prompt("Each round consists of X discs each. (max 12 for disc visuals)", numdiscs));
 
     curshooter = 1;  //curshooter & curshooter_disp
@@ -432,6 +418,7 @@ function resetgame()
     player2DisksShot = 0;
     discupdate(0);
     swaphammer();
+    showInitialDisks();
     page_update(3);
 }
 
@@ -469,12 +456,16 @@ function discupdate(x)
     //remove discs as shot
     if (x == 1) {
         var Xdisc = "p1disc" + player1DisksShot;
-        document.getElementById(Xdisc).setAttribute("class", "disc1shot")
-        document.getElementById(Xdisc).style.backgroundColor = "transparent";}
+        // document.getElementById(Xdisc).setAttribute("class", "disc1shot")
+        // document.getElementById(Xdisc).style.backgroundColor = "transparent";}
+        document.getElementById(Xdisc).classList.add("hidden_but_there");
+    }
     if (x == 2) {
         var Xdisc = "p2disc" + player2DisksShot;
-        document.getElementById(Xdisc).setAttribute("class", "disc2shot")
-        document.getElementById(Xdisc).style.backgroundColor = "transparent";}
+        // document.getElementById(Xdisc).setAttribute("class", "disc2shot")
+        // document.getElementById(Xdisc).style.backgroundColor = "transparent";}
+        document.getElementById(Xdisc).classList.add("hidden_but_there");
+    }
 }
 
 function showInitialDisks()
@@ -486,14 +477,14 @@ function showInitialDisks()
         if (i <= numdiscs)
         {
             // Show all of the disks we will use. 
-            document.getElementById(Xdisc).classList.remove("hidden");
-            document.getElementById(Ydisc).classList.remove("hidden");
+            document.getElementById(Xdisc).classList.remove("hidden_but_there");
+            document.getElementById(Ydisc).classList.remove("hidden_but_there");
         }
         else
         {
             // Hide the disks we won't use
-            document.getElementById(Xdisc).classList.add("hidden");
-            document.getElementById(Ydisc).classList.add("hidden");
+            document.getElementById(Xdisc).classList.add("hidden_but_there");
+            document.getElementById(Ydisc).classList.add("hidden_but_there");
         }
     }
 }

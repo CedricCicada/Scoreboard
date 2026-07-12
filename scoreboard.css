@@ -163,3 +163,7 @@
 .hidden {
   display:none;
 }
+
+.hidden_but_there {
+  visibility: hidden;
+}
